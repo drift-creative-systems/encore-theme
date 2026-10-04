@@ -1,0 +1,7 @@
+/* Site footer */
+.site-footer { margin-top: var(--section); padding-block: clamp(3rem, 6vw, 5rem) 2rem; border-top: 1px solid var(--line); }
+.site-footer__name { margin: 0 0 clamp(2rem, 5vw, 4rem); font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); font-size: var(--step-5); line-height: var(--display-leading); letter-spacing: var(--display-tracking); text-transform: var(--display-transform); overflow-wrap: anywhere; }
+.site-footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 2rem; }
+.site-footer__head { margin-bottom: 0.75rem; font-family: var(--font-body); font-stretch: 100%; font-weight: 600; font-size: var(--step--1); letter-spacing: 0; color: var(--muted); text-transform: none; }
+.site-footer__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: var(--step--1); }
+.site-footer__base p { margin: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }

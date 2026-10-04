@@ -1,0 +1,11 @@
+/* Press quotes */
+.quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: clamp(2rem, 4vw, 3.5rem); }
+.quote { margin: 0; padding-left: 1.25rem; border-left: 3px solid var(--accent); }
+.quote__rating { margin: 0 0 0.5rem; color: var(--accent); letter-spacing: 0.15em; }
+.quote__text { margin: 0; font-size: var(--step-2); line-height: 1.25; font-weight: 500; }
+.quote__text p { margin: 0; }
+.quote__text p:first-child::before { content: "\201C"; }
+.quote__text p:last-child::after { content: "\201D"; }
+.quote__source { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; margin-top: 1rem; color: var(--muted); }
+.quote__source cite { font-style: normal; font-weight: 700; color: var(--text); }
+.quote__logo { max-height: 1.75rem; width: auto; filter: grayscale(1) brightness(1.6); }

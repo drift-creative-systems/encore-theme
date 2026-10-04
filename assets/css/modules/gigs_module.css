@@ -1,0 +1,37 @@
+/*
+ * Gigs — the tour poster. The one loud element on the site: huge condensed
+ * day numbers down the left, venue set large, a single action on the right.
+ */
+.gig-list { border-top: 2px solid var(--text); }
+.gig { position: relative; display: grid; grid-template-columns: 6.5rem 1fr auto; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); padding: clamp(1rem, 2.2vw, 1.6rem) 0; border-bottom: 1px solid var(--line); }
+.gig::before { content: ""; position: absolute; left: calc(-1 * var(--gutter)); top: 0; bottom: 0; width: 4px; background: var(--accent); transform: scaleY(0); transform-origin: top; transition: transform 0.3s var(--ease); }
+.gig:hover::before, .gig:focus-within::before { transform: scaleY(1); }
+
+.gig__date { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 0.4rem; align-items: end; line-height: 1; }
+.gig__day { grid-row: 1 / 3; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); font-size: clamp(3rem, 2rem + 3vw, 4.5rem); line-height: 0.8; font-variant-numeric: tabular-nums; }
+.gig__weekday, .gig__month { font-size: var(--step--1); font-weight: 700; }
+.gig__weekday { color: var(--muted); align-self: start; }
+.gig__month { color: var(--accent); }
+
+.gig__where { display: grid; gap: 0.2rem; min-width: 0; }
+.gig__venue { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); font-size: var(--step-3); line-height: 0.95; letter-spacing: var(--display-tracking); text-transform: var(--display-transform); text-decoration: none; overflow-wrap: anywhere; }
+.gig__city { font-size: var(--step-1); }
+.gig__extra { color: var(--muted); font-size: var(--step--1); }
+
+.gig.status--sold-out .gig__venue, .gig.status--sold-out .gig__day { color: var(--muted); }
+.gig.status--cancelled .gig__venue { text-decoration: line-through; text-decoration-thickness: 0.06em; color: var(--muted); }
+.gig.status--few-left .btn--accent { box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.3); }
+
+.gig-past { margin-top: 2.5rem; }
+.gig-past summary { cursor: pointer; font-weight: 700; color: var(--muted); }
+.gig-past summary:hover { color: var(--text); }
+.gig-list--past { margin-top: 1rem; border-top-width: 1px; }
+.gig.is-past { opacity: 0.6; }
+.gig.is-past .gig__venue { font-size: var(--step-2); }
+.gig.is-past .gig__day { font-size: var(--step-3); }
+
+@media (max-width: 640px) {
+	.gig { grid-template-columns: 4.5rem 1fr; }
+	.gig__action { grid-column: 2; }
+	.gig__day { font-size: 3rem; }
+}

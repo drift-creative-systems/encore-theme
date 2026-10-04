@@ -1,0 +1,15 @@
+/* Mailing list */
+.module--newsletter .newsletter__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: end; padding: clamp(2rem, 5vw, 4rem); background: var(--accent); color: var(--on-accent); }
+.module--newsletter .section-head { margin: 0; }
+.module--newsletter .section-head__intro { color: inherit; opacity: 0.85; }
+.newsletter__form { grid-template-columns: 1fr 1fr auto; align-items: end; }
+.newsletter__form .form-status { grid-column: 1 / -1; }
+.module--newsletter .field__label { color: inherit; }
+.module--newsletter .field input { background: rgba(255, 255, 255, 0.92); color: #000; border-color: transparent; }
+.module--newsletter .btn--accent { background: var(--on-accent); color: var(--accent); border-color: var(--on-accent); }
+.module--newsletter .btn--accent:hover { background: transparent; color: var(--on-accent); }
+.module--newsletter .form-status.is-error { color: inherit; }
+@media (max-width: 860px) {
+	.module--newsletter .newsletter__inner { grid-template-columns: 1fr; }
+	.newsletter__form { grid-template-columns: 1fr; }
+}

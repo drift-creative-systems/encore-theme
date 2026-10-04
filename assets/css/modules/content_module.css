@@ -1,0 +1,6 @@
+/* Content */
+.content__grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.content--image-right .content__image { order: 2; }
+.content__image { margin: 0; }
+.content__image img { width: 100%; }
+@media (max-width: 760px) { .content__grid { grid-template-columns: 1fr; } .content--image-right .content__image { order: 0; } }

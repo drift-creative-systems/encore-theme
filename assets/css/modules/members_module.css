@@ -1,0 +1,8 @@
+/* Members */
+.member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); }
+.member__photo { margin-bottom: 1rem; overflow: hidden; }
+.member__photo img, .member__photo .art-placeholder { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter 0.4s var(--ease); }
+.member:hover .member__photo img { filter: none; }
+.member__name { margin: 0; font-size: var(--step-2); }
+.member__role { margin: 0.25rem 0 0; color: var(--accent); font-weight: 600; }
+.member__bio { margin-top: 0.75rem; color: var(--muted); font-size: var(--step--1); }

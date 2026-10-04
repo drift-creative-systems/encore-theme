@@ -1,0 +1,8 @@
+/* Merch */
+.merch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); }
+.merch-item__image { position: relative; margin-bottom: 0.9rem; background: var(--surface); }
+.merch-item__image img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.merch-item__badge { position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25em 0.7em; background: var(--accent); color: var(--on-accent); font-size: var(--step--1); font-weight: 700; }
+.merch-item__name { margin: 0; font-size: var(--step-1); }
+.merch-item__price { margin: 0.25rem 0 0.75rem; color: var(--muted); }
+.merch-item.is-sold-out .merch-item__image img { opacity: 0.45; }

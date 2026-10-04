@@ -1,0 +1,34 @@
+/* Site header */
+.site-header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
+.admin-bar .site-header { top: var(--wp-admin--admin-bar--height, 32px); }
+.has-hero .site-header { position: absolute; left: 0; right: 0; background: linear-gradient(rgba(0, 0, 0, 0.55), transparent); border-bottom: 0; color: var(--header-text); }
+.site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: var(--header-h); }
+.site-header__brand { display: flex; align-items: center; text-decoration: none; }
+.site-header__brand .logo-img { max-height: 2.75rem; width: auto; }
+.site-header__name { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); font-size: var(--step-2); line-height: 1; letter-spacing: var(--display-tracking); text-transform: var(--display-transform); }
+
+.nav { display: flex; align-items: center; gap: 1.75rem; }
+.nav__list, .nav ul.menu { display: flex; gap: 1.5rem; margin: 0; padding: 0; list-style: none; }
+.nav a { text-decoration: none; font-weight: 600; }
+.nav .current-menu-item > a, .nav .current_page_item > a { color: var(--accent); }
+.nav .sub-menu { display: none; }
+.nav__cta { min-height: 2.5rem; }
+
+.nav-toggle { display: none; position: relative; width: 2.75rem; height: 2.75rem; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after { position: absolute; left: 50%; width: 1.5rem; height: 2px; margin-left: -0.75rem; background: currentColor; transition: transform 0.25s var(--ease), opacity 0.2s; }
+.nav-toggle__bars { top: 50%; }
+.nav-toggle__bars::before, .nav-toggle__bars::after { content: ""; left: 0; margin: 0; }
+.nav-toggle__bars::before { top: -7px; }
+.nav-toggle__bars::after { top: 7px; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::before { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars::after { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+	.nav-toggle { display: block; z-index: 2; }
+	.nav { position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2rem; padding: var(--gutter); background: var(--bg); color: var(--text); visibility: hidden; opacity: 0; transition: opacity 0.25s var(--ease), visibility 0.25s; }
+	.nav.is-open { visibility: visible; opacity: 1; }
+	.nav__list, .nav ul.menu { flex-direction: column; gap: 0.25rem; }
+	.nav a:not(.btn) { font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); font-size: var(--step-4); line-height: 1.05; text-transform: var(--display-transform); }
+	body.nav-open { overflow: hidden; }
+}
