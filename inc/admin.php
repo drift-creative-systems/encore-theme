@@ -1,6 +1,7 @@
 <?php
 /**
- * admin.php — dependency notices and editor niceties.
+ * admin.php — ACF notice and editor niceties. The Drift Website plugin
+ * requirement lives in inc/requirements.php.
  *
  * @package Encore
  */
@@ -10,9 +11,6 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'admin_notices', static function () {
 	if ( ! current_user_can( 'activate_plugins' ) ) {
 		return;
-	}
-	if ( ! function_exists( 'drift_setting' ) ) {
-		echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'Encore needs the Drift Website plugin.', 'encore' ) . '</strong> ' . esc_html__( 'Without it there is no band content to show.', 'encore' ) . '</p></div>';
 	}
 	if ( ! class_exists( 'ACF' ) || ! function_exists( 'acf_get_field_groups' ) ) {
 		$screen = get_current_screen();

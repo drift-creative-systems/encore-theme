@@ -3,6 +3,7 @@
 The master WordPress theme for **Drift: Encore** band and artist sites, by The Bonsai Digital Collective. It renders the content that the [Drift Website](https://github.com/drift-creative-systems/drift-website) plugin syncs from each band's Airtable base. Each band gets a CSS-only child theme for branding.
 
 - **Requires:** WordPress 6.2+, PHP 8.0+, and the Drift Website plugin (product: Encore). ACF Pro is needed to edit page modules; without it, pages show their default modules.
+- **Theme and plugin are a pair.** Until Drift Website is active, visitors get a "coming soon" page (503) and wp-admin shows **Install & activate Drift Website**. The plugin likewise switches its Setup Wizard off until Encore is active. Each release has an `encore-bundle.zip` containing both.
 - **Repo:** https://github.com/drift-creative-systems/encore-theme. The theme self-updates from GitHub releases.
 
 ## What's in it
@@ -51,7 +52,7 @@ The accent colours always come from Airtable (Site Settings → Primary/Secondar
 
 1. Bump `Version:` in `style.css` and add a `CHANGELOG.md` entry.
 2. Push to `main`.
-3. Build the zip from the parent folder: `zip -r encore-theme.zip encore-theme -x "encore-theme/.git/*"`.
-4. Create a GitHub release tagged `vX.Y.Z` with the zip attached.
+3. Build the zips: `python tools/build-release.py` writes `dist/encore-theme.zip` (with an `encore-theme/` top folder; `.git`, `tools/`, `dist/` and `CLAUDE.md` left out) and `dist/encore-bundle.zip` (theme zip + the latest `drift-website.zip` + an install README). Pass `--plugin-zip path/to/drift-website.zip` to bundle a specific plugin build.
+4. Create a GitHub release tagged `vX.Y.Z` with both zips attached. `encore-theme.zip` must be there: the updater uses release assets, and the plugin's Install button downloads it by that name.
 
 For a private repo, define `ENCORE_GITHUB_TOKEN` (or reuse `DRIFT_WEBSITE_GITHUB_TOKEN`) in `wp-config.php`.

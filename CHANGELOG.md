@@ -2,6 +2,15 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [1.1.0] - 2026-10-04
+
+### Added
+- The theme and the Drift Website plugin now work as a pair (`inc/requirements.php`). Until the plugin is active, visitors get a standalone "coming soon" holding page (503 with `Retry-After`, no analytics or fonts), and wp-admin shows a persistent notice with **Install & activate Drift Website** (downloads its latest GitHub release) or **Activate** if it's already installed. Drift Website 1.1.0 does the reverse and blocks its Setup Wizard until Encore is active.
+- `tools/build-release.py` builds `encore-theme.zip` and `encore-bundle.zip` (both zips plus an install README) for each release.
+
+### Changed
+- The plugin notice moved from `inc/admin.php` to `inc/requirements.php`.
+
 ## [1.0.0] - 2026-10-04
 
 ### Changed

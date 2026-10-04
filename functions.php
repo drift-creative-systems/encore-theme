@@ -11,12 +11,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ENCORE_VERSION', wp_get_theme( get_template() )->get( 'Version' ) ?: '1.0.0' );
+define( 'ENCORE_VERSION', wp_get_theme( get_template() )->get( 'Version' ) ?: '1.1.0' );
 define( 'ENCORE_DIR', get_template_directory() );
 define( 'ENCORE_URI', get_template_directory_uri() );
 
 $encore_modules = [
 	'setup',        // Theme supports, menus, image sizes.
+	'requirements', // Drift Website plugin: holding page + install/activate notice until it's active.
 	'housekeeping', // Head cleanup, comments off, block editor off, SVG/WebP uploads.
 	'helpers',      // Settings wrapper, links, formatting, embeds.
 	'data',         // Queries for gigs, releases, members, media…
@@ -26,7 +27,7 @@ $encore_modules = [
 	'schema',       // JSON-LD (MusicGroup, MusicEvent, MusicAlbum) and fallback meta.
 	'consent',      // Customizer: GA4 ID + cookie consent (only when analytics is set).
 	'acf-json',     // ACF Local JSON load/save points.
-	'admin',        // Plugin dependency notice.
+	'admin',        // ACF notice, editor niceties.
 	'updates',      // Self-update from GitHub releases.
 ];
 
