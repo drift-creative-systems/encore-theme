@@ -2,7 +2,7 @@
 /**
  * data.php — every query the templates need, in one place.
  *
- * All read plain WordPress data that the Drift Website plugin wrote at sync
+ * All read plain WordPress data that the Encore Website plugin wrote at sync
  * time. Each one is guarded so a missing post type returns [] rather than
  * an error (e.g. plugin deactivated).
  *
@@ -107,8 +107,9 @@ function encore_get_latest_release(): ?WP_Post {
 
 /** @return WP_Post[] Tracks of a release, in tracklist order. */
 function encore_get_tracks( int $release_id ): array {
-	if ( function_exists( 'drift_linked_posts' ) ) {
-		$tracks = drift_linked_posts( $release_id, 'tracks' );
+	$linked = function_exists( 'encore_website_linked_posts' ) ? 'encore_website_linked_posts' : ( function_exists( 'drift_linked_posts' ) ? 'drift_linked_posts' : '' );
+	if ( $linked ) {
+		$tracks = $linked( $release_id, 'tracks' );
 		if ( $tracks ) {
 			return $tracks;
 		}

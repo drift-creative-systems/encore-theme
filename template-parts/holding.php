@@ -1,6 +1,6 @@
 <?php
 /**
- * Holding page, served with a 503 while the Drift Website plugin isn't
+ * Holding page, served with a 503 while the Encore Website plugin isn't
  * active (inc/requirements.php). Standalone on purpose: no wp_head(), so no
  * analytics, fonts or plugin output, and nothing that needs band data.
  *
@@ -28,7 +28,7 @@ $encore_name = get_bloginfo( 'name' );
 		<p class="encore-holding__text"><?php esc_html_e( 'This site is being set up. Please check back soon.', 'encore' ); ?></p>
 		<?php if ( current_user_can( 'activate_plugins' ) ) : ?>
 			<p class="encore-holding__admin">
-				<a href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Finish setup: activate the Drift Website plugin', 'encore' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( 'plugins.php' ) ); ?>"><?php esc_html_e( 'Finish setup: activate the Encore Website plugin', 'encore' ); ?></a>
 			</p>
 		<?php endif; ?>
 	</main>

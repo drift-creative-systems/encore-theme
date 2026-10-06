@@ -1,6 +1,6 @@
 <?php
 /**
- * admin.php — ACF notice and editor niceties. The Drift Website plugin
+ * admin.php — ACF notice and editor niceties. The Encore Website plugin
  * requirement lives in inc/requirements.php.
  *
  * @package Encore

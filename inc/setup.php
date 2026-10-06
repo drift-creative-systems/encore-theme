@@ -33,8 +33,8 @@ add_filter( 'body_class', static function ( array $classes ): array {
 			$classes[] = 'page-' . sanitize_html_class( $post->post_name );
 		}
 	}
-	if ( ! function_exists( 'drift_setting' ) ) {
-		$classes[] = 'no-drift';
+	if ( ! encore_plugin_ready() ) {
+		$classes[] = 'no-encore-website';
 	}
 	return $classes;
 } );

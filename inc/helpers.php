@@ -2,7 +2,7 @@
 /**
  * helpers.php — small, theme-wide helpers. Anything Airtable-derived comes
  * through encore_setting() (a guarded wrapper round the plugin's
- * drift_setting()), so the theme still renders if the plugin is off.
+ * encore_website_setting()), so the theme still renders if the plugin is off.
  *
  * @package Encore
  */
@@ -17,7 +17,24 @@ defined( 'ABSPATH' ) || exit;
  * @return mixed
  */
 function encore_setting( string $key, $default = '' ) {
-	return function_exists( 'drift_setting' ) ? drift_setting( $key, $default ) : $default;
+	if ( function_exists( 'encore_website_setting' ) ) {
+		return encore_website_setting( $key, $default );
+	}
+	return function_exists( 'drift_setting' ) ? drift_setting( $key, $default ) : $default; // Plugin 1.x.
+}
+
+/**
+ * The hidden inputs an Encore Website form needs (action, form key, nonce,
+ * honeypot). Prints nothing if the plugin is off.
+ *
+ * @param string $form Form key from the plugin's map, e.g. 'enquiry'.
+ */
+function encore_form_hidden_fields( string $form ): void {
+	if ( function_exists( 'encore_website_form_hidden_fields' ) ) {
+		encore_website_form_hidden_fields( $form );
+	} elseif ( function_exists( 'drift_form_hidden_fields' ) ) {
+		drift_form_hidden_fields( $form ); // Plugin 1.x.
+	}
 }
 
 function encore_artist_name(): string {
@@ -312,7 +329,8 @@ function encore_section_head( string $title, string $intro = '', string $tag = '
 function encore_args( array $args, array $defaults ): array {
 	$out = array_merge( $defaults, array_intersect_key( $args, $defaults ) );
 	foreach ( $out as $key => $value ) {
-		if ( is_string( $value ) && 0 === strpos( $value, '__drift_' ) ) {
+		// '__drift_' is what the plugin's 1.x wizard seeded; both may be stored.
+		if ( is_string( $value ) && ( 0 === strpos( $value, '__encore_' ) || 0 === strpos( $value, '__drift_' ) ) ) {
 			$out[ $key ] = '';
 		}
 	}

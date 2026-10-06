@@ -4,8 +4,8 @@
  *
  * To ship: bump Version in style.css, add a CHANGELOG entry, push to main,
  * then publish a GitHub Release tagged vX.Y.Z with encore-theme.zip
- * attached. Private repo: define ENCORE_GITHUB_TOKEN (or reuse
- * DRIFT_WEBSITE_GITHUB_TOKEN) in wp-config.php.
+ * attached. Private repo: define ENCORE_GITHUB_TOKEN (or reuse the plugin's
+ * ENCORE_WEBSITE_GITHUB_TOKEN, or 1.x DRIFT_WEBSITE_GITHUB_TOKEN) in wp-config.php.
  *
  * @package Encore
  */
@@ -35,7 +35,14 @@ if ( $encore_vcs && method_exists( $encore_vcs, 'enableReleaseAssets' ) ) {
 	$encore_vcs->enableReleaseAssets();
 }
 
-$encore_token = defined( 'ENCORE_GITHUB_TOKEN' ) ? ENCORE_GITHUB_TOKEN : ( defined( 'DRIFT_WEBSITE_GITHUB_TOKEN' ) ? DRIFT_WEBSITE_GITHUB_TOKEN : '' );
+$encore_token = '';
+foreach ( [ 'ENCORE_GITHUB_TOKEN', 'ENCORE_WEBSITE_GITHUB_TOKEN', 'DRIFT_WEBSITE_GITHUB_TOKEN' ] as $encore_token_name ) {
+	if ( defined( $encore_token_name ) && constant( $encore_token_name ) ) {
+		$encore_token = (string) constant( $encore_token_name );
+		break;
+	}
+}
+unset( $encore_token_name );
 if ( $encore_token ) {
 	$encore_updater->setAuthentication( $encore_token );
 }

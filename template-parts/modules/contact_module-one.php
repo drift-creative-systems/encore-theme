@@ -30,10 +30,10 @@ encore_module_open( $a, 'contact' );
 			<?php endif; ?>
 		</div>
 
-		<?php if ( function_exists( 'drift_form_hidden_fields' ) ) : ?>
-			<form class="drift-form contact__form" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" novalidate>
-				<?php drift_form_hidden_fields( (string) $a['form'] ?: 'enquiry' ); ?>
-				<input type="hidden" name="page" value="<?php echo esc_url( get_permalink() ?: home_url( '/' ) ); ?>">
+		<?php if ( encore_plugin_ready() ) : ?>
+			<form class="encore-form contact__form" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" novalidate>
+				<?php encore_form_hidden_fields( (string) $a['form'] ?: 'enquiry' ); ?>
+				<input type="hidden" name="source_page" value="<?php echo esc_url( get_permalink() ?: home_url( '/' ) ); ?>">
 				<div class="field-row">
 					<label class="field">
 						<span class="field__label"><?php esc_html_e( 'Name', 'encore' ); ?> <span aria-hidden="true">*</span></span>

@@ -1,16 +1,16 @@
 <?php
 /**
- * requirements.php — Encore and the Drift Website plugin ship as a pair.
+ * requirements.php — Encore and the Encore Website plugin ship as a pair.
  *
  * Without the plugin there is no band content, so instead of a half-empty
  * site:
  * - the front end serves a neutral "coming soon" holding page with a 503
  *   (search engines treat it as temporary and keep existing rankings);
  * - wp-admin shows a persistent notice with a one-click "Install & activate
- *   Drift Website" (downloads the latest GitHub release), or "Activate" when
+ *   Encore Website" (downloads the latest GitHub release), or "Activate" when
  *   it's installed but switched off.
  *
- * The plugin does the same in reverse (drift-website/includes/
+ * The plugin does the same in reverse (encore-website/includes/
  * class-theme-check.php): it blocks its Setup Wizard until Encore is active.
  *
  * @package Encore
@@ -18,21 +18,25 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ENCORE_PLUGIN_NAME = 'Drift Website';
-const ENCORE_PLUGIN_ZIP  = 'https://github.com/drift-creative-systems/drift-website/releases/latest/download/drift-website.zip';
+const ENCORE_PLUGIN_NAME = 'Encore Website';
+const ENCORE_PLUGIN_ZIP  = 'https://github.com/drift-creative-systems/encore-website/releases/latest/download/encore-website.zip';
+
+/** The plugin's 1.x name, still found on sites that haven't updated it yet. */
+const ENCORE_PLUGIN_LEGACY_NAME = 'Drift Website';
 
 /**
- * Is the Drift Website plugin loaded?
+ * Is the Encore Website plugin loaded? (1.x, as Drift Website, counts too.)
  *
  * @return bool
  */
 function encore_plugin_ready(): bool {
-	return function_exists( 'drift_setting' );
+	return function_exists( 'encore_website_setting' ) || function_exists( 'drift_setting' );
 }
 
 /**
- * The installed plugin's file (e.g. drift-website/drift-website.php), or ''
- * if it isn't installed. Matched by name too, in case the folder was renamed.
+ * The installed plugin's file (e.g. encore-website/encore-website.php, or
+ * drift-website/encore-website.php on sites updated from 1.x), or '' if it
+ * isn't installed. Matched by name too, in case the folder was renamed.
  *
  * @return string
  */
@@ -41,7 +45,10 @@ function encore_plugin_file(): string {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
 	foreach ( get_plugins() as $file => $data ) {
-		if ( 'drift-website.php' === basename( $file ) || ENCORE_PLUGIN_NAME === ( $data['Name'] ?? '' ) ) {
+		if (
+			in_array( basename( $file ), [ 'encore-website.php', 'drift-website.php' ], true )
+			|| in_array( $data['Name'] ?? '', [ ENCORE_PLUGIN_NAME, ENCORE_PLUGIN_LEGACY_NAME ], true )
+		) {
 			return (string) $file;
 		}
 	}
@@ -89,7 +96,7 @@ add_action( 'admin_notices', static function () {
 		$url   = '';
 	}
 
-	echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'Encore needs the Drift Website plugin.', 'encore' ) . '</strong> ';
+	echo '<div class="notice notice-error"><p><strong>' . esc_html__( 'Encore needs the Encore Website plugin.', 'encore' ) . '</strong> ';
 	esc_html_e( 'The theme and plugin work as a pair: until it\'s active, visitors see a "coming soon" page.', 'encore' );
 	if ( $url ) {
 		echo ' <a class="button button-primary" href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a>';
@@ -103,7 +110,7 @@ add_action( 'admin_notices', static function () {
  * @param string $message Error shown to the user.
  */
 function encore_install_plugin_fail( string $message ): void {
-	error_log( 'Encore — Drift Website install failed: ' . $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+	error_log( 'Encore — Encore Website install failed: ' . $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 	set_transient( 'encore_plugin_error', $message, MINUTE_IN_SECONDS );
 	wp_safe_redirect( wp_get_referer() ? wp_get_referer() : admin_url( 'plugins.php' ) );
 	exit;
@@ -125,7 +132,7 @@ add_action( 'admin_post_encore_install_plugin', static function () {
 
 		// FTP-credential hosts would need a form; tell them to upload instead.
 		if ( 'direct' !== get_filesystem_method() ) {
-			encore_install_plugin_fail( __( 'WordPress can\'t write to the plugins folder directly here. Upload drift-website.zip under Plugins → Add New instead.', 'encore' ) );
+			encore_install_plugin_fail( __( 'WordPress can\'t write to the plugins folder directly here. Upload encore-website.zip under Plugins → Add New instead.', 'encore' ) );
 		}
 
 		$upgrader = new Plugin_Upgrader( new WP_Ajax_Upgrader_Skin() );
@@ -134,23 +141,23 @@ add_action( 'admin_post_encore_install_plugin', static function () {
 		if ( is_wp_error( $result ) || ! $result ) {
 			$message = is_wp_error( $result ) ? $result->get_error_message() : implode( ' ', (array) $upgrader->skin->get_error_messages() );
 			/* translators: %s: error message. */
-			encore_install_plugin_fail( sprintf( __( 'Drift Website couldn\'t be installed: %s', 'encore' ), $message ) );
+			encore_install_plugin_fail( sprintf( __( 'Encore Website couldn\'t be installed: %s', 'encore' ), $message ) );
 		}
 
 		wp_clean_plugins_cache();
 		$file = encore_plugin_file();
 		if ( ! $file ) {
-			encore_install_plugin_fail( __( 'Drift Website downloaded but WordPress can\'t find it. Check the Plugins screen.', 'encore' ) );
+			encore_install_plugin_fail( __( 'Encore Website downloaded but WordPress can\'t find it. Check the Plugins screen.', 'encore' ) );
 		}
 	}
 
 	$activated = activate_plugin( $file );
 	if ( is_wp_error( $activated ) ) {
 		/* translators: %s: error message. */
-		encore_install_plugin_fail( sprintf( __( 'Drift Website installed but couldn\'t be activated: %s', 'encore' ), $activated->get_error_message() ) );
+		encore_install_plugin_fail( sprintf( __( 'Encore Website installed but couldn\'t be activated: %s', 'encore' ), $activated->get_error_message() ) );
 	}
 
 	// Straight on to connecting Airtable.
-	wp_safe_redirect( admin_url( 'admin.php?page=drift-website' ) );
+	wp_safe_redirect( admin_url( 'admin.php?page=encore-website' ) );
 	exit;
 } );

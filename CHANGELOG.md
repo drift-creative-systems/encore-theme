@@ -2,6 +2,19 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [Unreleased] - 1.3.0
+
+### Changed
+- The plugin is now **Encore Website** (formerly Drift Website). The theme calls `encore_website_setting()`, `encore_website_linked_posts()`, `encore_website_form_hidden_fields()` and `Encore_Website_Page_Creator`. Each falls back to its 1.x `drift_*` name, so this theme works with plugin 1.x and 2.x whichever updates first.
+- The requirements notice installs `encore-website.zip` from the `encore-website` repo and recognises the plugin under either name or folder.
+- Forms: `.drift-form` → `.encore-form`. New `encore_form_hidden_fields()` helper. Body class `no-drift` → `no-encore-website`.
+- Contact form posts the page URL as `source_page`, not `page`. `page` is a WordPress admin query var, and logged-in AJAX requests run `admin_init`. Needs Encore Website 2.0.0's map, which reads `source_page`.
+- `tools/build-release.py` bundles `encore-website.zip`.
+- Update token: also reads `ENCORE_WEBSITE_GITHUB_TOKEN`.
+
+### Fixed
+- Forms no longer show the browser's raw "JSON.parse: unexpected character…" message when the server answers with something other than JSON (an HTML error page, a security plugin, a redirect). Visitors see the normal "Something went wrong" message instead.
+
 ## [1.2.0] - 2026-10-06
 
 ### Added

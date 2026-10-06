@@ -2,7 +2,7 @@
  * Encore front end. Vanilla JS, no dependencies, deferred.
  *
  *   Menu toggle · click-to-play video · gallery filter + lightbox ·
- *   Drift forms (AJAX to the plugin) · cookie consent for optional GA4
+ *   Encore Website forms (AJAX to the plugin) · cookie consent for optional GA4
  */
 (function () {
 	'use strict';
@@ -120,8 +120,8 @@
 		lightbox(link.href, link.getAttribute('data-caption'), img ? img.alt : '');
 	});
 
-	/* ── Drift forms ──────────────────────────────────────────────────── */
-	document.querySelectorAll('form.drift-form').forEach(function (form) {
+	/* ── Encore Website forms ─────────────────────────────────────────── */
+	document.querySelectorAll('form.encore-form').forEach(function (form) {
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
 			var status = form.querySelector('.form-status');
@@ -133,7 +133,17 @@
 			if (button) { button.disabled = true; button.textContent = t.sending || 'Sending…'; }
 
 			fetch(form.action || cfg.ajaxUrl, { method: 'POST', body: new FormData(form), credentials: 'same-origin' })
-				.then(function (r) { return r.json(); })
+				// Read as text: a PHP error, security plugin or login redirect can
+				// answer with HTML, and the visitor should get a readable message
+				// rather than the browser's JSON.parse error.
+				.then(function (r) { return r.text(); })
+				.then(function (body) {
+					try {
+						return JSON.parse(body);
+					} catch (parseError) {
+						throw new Error(t.error || 'Something went wrong. Please try again.');
+					}
+				})
 				.then(function (res) {
 					var data = (res && res.data) || {};
 					if (res && res.success) {

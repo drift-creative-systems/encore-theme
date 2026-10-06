@@ -4,7 +4,7 @@
  *
  * Rows come from the ACF flexible content field `page_builder`
  * (acf-json/group_encore_page_builder.json). When a page has no rows — or
- * ACF Pro isn't active — the rows the Drift Website plugin's map defines for
+ * ACF Pro isn't active — the rows the Encore Website plugin's map defines for
  * that page are used instead (front page = the map's "home" page, others
  * matched by slug), so a fresh site looks finished before anyone opens the
  * editor.
@@ -46,18 +46,19 @@ function encore_page_rows( ?int $post_id = null ): array {
 }
 
 /**
- * Default rows from the active Drift product map.
+ * Default rows from the Encore Website plugin's product map.
  *
  * @return array[]
  */
 function encore_fallback_rows( int $post_id ): array {
 	$rows = [];
 
-	if ( class_exists( 'Drift_Website_Page_Creator' ) ) {
+	$creator = class_exists( 'Encore_Website_Page_Creator' ) ? 'Encore_Website_Page_Creator' : ( class_exists( 'Drift_Website_Page_Creator' ) ? 'Drift_Website_Page_Creator' : '' );
+	if ( $creator ) {
 		$post    = get_post( $post_id );
 		$is_home = (int) get_option( 'page_on_front' ) === $post_id;
 
-		foreach ( Drift_Website_Page_Creator::definitions() as $def ) {
+		foreach ( $creator::definitions() as $def ) {
 			if ( ( $is_home && '' === $def['slug'] ) || ( ! $is_home && $post && $def['slug'] === $post->post_name ) ) {
 				$rows = (array) $def['rows'];
 				break;
