@@ -1,6 +1,6 @@
 # Encore theme
 
-The master WordPress theme for **Drift: Encore** band and artist sites, by The Bonsai Digital Collective. It renders the content that the [Encore Website](https://github.com/drift-creative-systems/drift-website) plugin syncs from each band's Airtable base. Each band gets a CSS-only child theme for branding.
+The master WordPress theme for **Encore** band and artist sites, by [Drift Creative Systems](https://driftcreativesystems.co.uk/). It renders the content that the [Encore Website](https://github.com/drift-creative-systems/encore-website) plugin syncs from each band's Airtable base. Each band gets a CSS-only child theme for branding.
 
 - **Requires:** WordPress 6.2+, PHP 8.0+, and the Encore Website plugin (product: Encore). ACF Pro is needed to edit page modules; without it, pages show their default modules.
 - **Theme and plugin are a pair.** Until Encore Website is active, visitors get a "coming soon" page (503) and wp-admin shows **Install & activate Encore Website**. The plugin likewise switches its Setup Wizard off until Encore is active. Each release has an `encore-bundle.zip` containing both.

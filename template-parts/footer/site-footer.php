@@ -45,7 +45,15 @@ $encore_booking = (string) encore_setting( 'booking_email' );
 				<?php if ( encore_ga4_id() ) : ?>
 					<button type="button" class="link-button" data-consent-open><?php esc_html_e( 'Cookie settings', 'encore' ); ?></button>
 				<?php endif; ?>
-				<span><?php esc_html_e( 'Website by The Bonsai Digital Collective', 'encore' ); ?></span>
+				<span>
+					<?php
+					printf(
+						/* translators: %s: linked studio name. */
+						esc_html__( 'Website by %s', 'encore' ),
+						'<a href="' . esc_url( 'https://driftcreativesystems.co.uk/' ) . '">' . esc_html__( 'Drift Creative Systems', 'encore' ) . '</a>'
+					);
+					?>
+				</span>
 			</p>
 		</div>
 	</div>

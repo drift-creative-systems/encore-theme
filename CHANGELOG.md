@@ -4,6 +4,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+### Changed
+- Footer credit is now "Website by Drift Creative Systems", linked to https://driftcreativesystems.co.uk/. Author URI points there too.
+
 ### Fixed
 - Forms posted to `/current-page/[object HTMLInputElement]` (a 404) and failed with "JSON.parse: unexpected character". The script read `form.action`, which returns the form's `<input name="action">` rather than its `action` attribute; it now uses `getAttribute( 'action' )`. (1.3.0 wrongly blamed the `page` field; renaming it to `source_page` was harmless but not the fix.)
 
