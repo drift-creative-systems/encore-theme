@@ -1,7 +1,7 @@
 /**
  * Encore front end. Vanilla JS, no dependencies, deferred.
  *
- *   Menu toggle · click-to-play video · gallery filter + lightbox ·
+ *   Menu toggle · header over hero · click-to-play video · gallery filter + lightbox ·
  *   Encore Website forms (AJAX to the plugin) · cookie consent for optional GA4
  */
 (function () {
@@ -38,6 +38,23 @@
 		nav.addEventListener('click', function (e) {
 			if (e.target.closest('a')) { setMenu(false); }
 		});
+	}
+
+	/* ── Header over a hero: solid once the page scrolls ──────────────── */
+	var header = document.querySelector('.has-hero .site-header');
+	if (header) {
+		var ticking = false;
+		var updateHeader = function () {
+			header.classList.toggle('is-scrolled', window.scrollY > 8);
+			ticking = false;
+		};
+		window.addEventListener('scroll', function () {
+			if (!ticking) {
+				ticking = true;
+				window.requestAnimationFrame(updateHeader);
+			}
+		}, { passive: true });
+		updateHeader(); // A reload mid-page starts solid.
 	}
 
 	/* ── Click-to-play video ──────────────────────────────────────────── */

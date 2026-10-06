@@ -5,6 +5,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [Unreleased]
 
 ### Changed
+- Header stays pinned on pages that open with a hero. It starts transparent over the image and fades to the solid header once the page scrolls (`.is-scrolled`, toggled in `main.js`). Other pages were already sticky.
 - Footer credit is now "Website by Drift Creative Systems", linked to https://driftcreativesystems.co.uk/. Author URI points there too.
 
 ### Fixed

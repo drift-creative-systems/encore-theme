@@ -1,7 +1,15 @@
 /* Site header */
 .site-header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--line); }
 .admin-bar .site-header { top: var(--wp-admin--admin-bar--height, 32px); }
-.has-hero .site-header { position: absolute; left: 0; right: 0; background: linear-gradient(rgba(0, 0, 0, 0.55), transparent); border-bottom: 0; color: var(--header-text); }
+/*
+ * Over a hero the header is fixed and transparent, then fades to the solid
+ * header once the page scrolls (.is-scrolled, set in main.js). The solid
+ * layer is a ::before so it can fade in over the gradient.
+ */
+.has-hero .site-header { position: fixed; left: 0; right: 0; background: linear-gradient(rgba(0, 0, 0, 0.55), transparent); border-bottom: 1px solid transparent; color: var(--header-text); transition: color 0.3s var(--ease), border-color 0.3s var(--ease); }
+.has-hero .site-header::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--bg); opacity: 0; transition: opacity 0.3s var(--ease); }
+.has-hero .site-header.is-scrolled { color: var(--text); border-bottom-color: var(--line); }
+.has-hero .site-header.is-scrolled::before { opacity: 1; }
 .site-header__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: var(--header-h); }
 .site-header__brand { display: flex; align-items: center; text-decoration: none; }
 .site-header__brand .logo-img { max-height: 2.75rem; width: auto; }
