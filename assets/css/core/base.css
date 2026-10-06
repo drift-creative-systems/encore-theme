@@ -95,6 +95,8 @@ ul[role="list"], ol[role="list"] { list-style: none; margin: 0; padding: 0; }
 .link-button { padding: 0; border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; }
 
 .link-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+ul.link-list--release {margin-top:20px}
+
 .pill { display: inline-block; padding: 0.45em 1em; border: 1px solid var(--line); border-radius: var(--radius-pill); font-size: var(--step--1); font-weight: 600; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
 .pill:hover { border-color: var(--accent); color: var(--accent); }
 .link-list--plain { flex-direction: column; gap: 0.35rem; margin: 0; }
