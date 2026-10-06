@@ -50,7 +50,7 @@ $encore_booking = (string) encore_setting( 'booking_email' );
 					printf(
 						/* translators: %s: linked studio name. */
 						esc_html__( 'Website by %s', 'encore' ),
-						'<a href="' . esc_url( 'https://driftcreativesystems.co.uk/' ) . '">' . esc_html__( 'Drift Creative Systems', 'encore' ) . '</a>'
+						'<a href="' . esc_url( 'https://driftcreativesystems.co.uk/' ) . '" target="_blank">' . esc_html__( 'Drift Creative Systems', 'encore' ) . '</a>'
 					);
 					?>
 				</span>
