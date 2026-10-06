@@ -132,7 +132,9 @@
 			if (status) { status.textContent = ''; status.classList.remove('is-error'); }
 			if (button) { button.disabled = true; button.textContent = t.sending || 'Sending…'; }
 
-			fetch(form.action || cfg.ajaxUrl, { method: 'POST', body: new FormData(form), credentials: 'same-origin' })
+			// getAttribute, not form.action: the form has an <input name="action">
+			// (WordPress's AJAX action), and form.action returns that element.
+			fetch(form.getAttribute('action') || cfg.ajaxUrl, { method: 'POST', body: new FormData(form), credentials: 'same-origin' })
 				// Read as text: a PHP error, security plugin or login redirect can
 				// answer with HTML, and the visitor should get a readable message
 				// rather than the browser's JSON.parse error.
