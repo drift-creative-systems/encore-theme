@@ -2,7 +2,7 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
-## [Unreleased] - 1.3.0
+## [1.3.0] - 2026-10-06
 
 ### Changed
 - The plugin is now **Encore Website** (formerly Drift Website). The theme calls `encore_website_setting()`, `encore_website_linked_posts()`, `encore_website_form_hidden_fields()` and `Encore_Website_Page_Creator`. Each falls back to its 1.x `drift_*` name, so this theme works with plugin 1.x and 2.x whichever updates first.
