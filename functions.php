@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ENCORE_VERSION', wp_get_theme( get_template() )->get( 'Version' ) ?: '1.1.0' );
+define( 'ENCORE_VERSION', wp_get_theme( get_template() )->get( 'Version' ) ?: '1.2.0' );
 define( 'ENCORE_DIR', get_template_directory() );
 define( 'ENCORE_URI', get_template_directory_uri() );
 

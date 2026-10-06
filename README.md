@@ -56,3 +56,14 @@ The accent colours always come from Airtable (Site Settings → Primary/Secondar
 4. Create a GitHub release tagged `vX.Y.Z` with both zips attached. `encore-theme.zip` must be there: the updater uses release assets, and the plugin's Install button downloads it by that name.
 
 For a private repo, define `ENCORE_GITHUB_TOKEN` (or reuse `DRIFT_WEBSITE_GITHUB_TOKEN`) in `wp-config.php`.
+
+## Licence
+
+Split licence, © Drift Creative Systems:
+
+- **PHP files:** GPL-2.0-or-later (`GPL-2.0.txt`), because they run inside WordPress.
+- **Everything else** (CSS, JavaScript, images, ACF JSON, docs): proprietary, all rights reserved. They can't be copied, modified, redistributed or used in a competing product without written permission.
+- **`lib/plugin-update-checker/`:** MIT, by its author.
+- **Names:** "Drift" and "Encore" are reserved. Modified versions can't be distributed under them.
+
+The full terms are in `LICENSE`.

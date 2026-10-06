@@ -2,10 +2,9 @@
 /**
  * acf-json.php — ACF Local JSON.
  *
- * Saves ALWAYS go to this master theme's acf-json/, never the child's —
- * fixing the vision_base_theme gotcha where new module fields were saved
- * into whichever child was active and lost. Child themes are CSS only, so
- * there is nothing for them to save.
+ * Saves ALWAYS go to this master theme's acf-json/, never the child's, so
+ * new module fields can't be saved into whichever child is active and lost.
+ * Child themes are CSS only, so there is nothing for them to save.
  *
  * @package Encore
  */

@@ -2,6 +2,15 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [1.2.0] - 2026-10-06
+
+### Added
+- Live and merch embeds. When Airtable's Site Settings → **Live Embed** or **Merch Embed** holds iframe code, it replaces the gig list (every `gigs_module`) or the merch grid (`merch_module`). Embeds are click-to-load: the iframe sits in an inert `<template>` until the visitor presses the button, so no third-party requests or cookies happen before that. New helpers `encore_kses_iframe()` (iframe-only, https-only, re-filtered on output) and `encore_embed()`. Needs Drift Website 1.2.0 or later.
+
+### Changed
+- Licence: split. PHP stays GPL-2.0-or-later (`GPL-2.0.txt`); everything else (CSS, JS, images, ACF JSON, docs) is proprietary to Drift Creative Systems. See `LICENSE`. The Drift and Encore names are reserved.
+- Code comments and changelog no longer name the private projects the theme was originally built from.
+
 ## [1.1.0] - 2026-10-04
 
 ### Added
@@ -20,7 +29,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 ## [0.1.0] - 2026-10-03
 
 ### Added
-- First release. Lean master theme for Drift: Encore, built on vision_base_theme's architecture (modular `inc/`, flexible-content page builder, layout-option variants, CSS-only child themes, GitHub self-updates). The TTNG-specific code was not carried over.
+- First release. Lean master theme for Drift: Encore (modular `inc/`, flexible-content page builder, layout-option variants, CSS-only child themes, GitHub self-updates).
 - 16 page modules with ACF Local JSON (`acf-json/group_encore_page_builder.json`).
 - Default rows from the Drift product map when a page has none, or when ACF is inactive.
 - Single gig and release templates; news, listing and 404 templates.
@@ -31,4 +40,4 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Click-to-play YouTube/Vimeo (youtube-nocookie), gallery filters and a native `<dialog>` lightbox.
 - AJAX booking and mailing-list forms through the Drift plugin.
 - Optional GA4 behind cookie consent (Customiser → Analytics).
-- ACF JSON always saves to the master theme, never the child (fixes the vision_base_theme save-point gotcha).
+- ACF JSON always saves to the master theme, never the child, so new module fields can't be lost in a child theme.

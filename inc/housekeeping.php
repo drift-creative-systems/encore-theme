@@ -1,10 +1,9 @@
 <?php
 /**
- * housekeeping.php — the useful parts of vision_base_theme's cleanup files,
- * consolidated. Deliberately NOT carried over: the output-buffer that added
- * role="list" to every <ul>, the alt="" → alt=" " rewrite (empty alt is
- * correct for decorative images), and forcing target="_blank" on every
- * external link via JS.
+ * housekeeping.php — front-end and admin cleanup. Deliberately left out:
+ * an output-buffer that adds role="list" to every <ul>, an alt="" → alt=" "
+ * rewrite (empty alt is correct for decorative images), and forcing
+ * target="_blank" on every external link via JS.
  *
  * @package Encore
  */
