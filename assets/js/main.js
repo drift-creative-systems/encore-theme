@@ -55,6 +55,22 @@
 		iframe.focus();
 	});
 
+	/* ── Click-to-load embeds (Live / Merch Embed) ────────────────────── */
+	document.addEventListener('click', function (e) {
+		var btn = e.target.closest('.embed__load');
+		if (!btn) { return; }
+		var box = btn.closest('.embed');
+		var tpl = box.querySelector('template');
+		if (!tpl) { return; }
+		var label = btn.textContent;
+		box.innerHTML = '';
+		box.appendChild(tpl.content.cloneNode(true));
+		box.classList.add('is-loaded');
+		var frames = box.querySelectorAll('iframe');
+		frames.forEach(function (f) { if (!f.title) { f.title = label; } });
+		if (frames[0]) { frames[0].focus(); }
+	});
+
 	/* ── Gallery filter ───────────────────────────────────────────────── */
 	document.querySelectorAll('.filter').forEach(function (group) {
 		var grid = group.parentElement.querySelector('.photo-grid');

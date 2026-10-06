@@ -237,6 +237,57 @@ function encore_video_player( string $url, string $title, int $poster_id = 0 ): 
 }
 
 /**
+ * Iframe-only filter for embed code synced from Airtable (Live Embed, Merch
+ * Embed). The plugin already filters it at sync time; this repeats the
+ * filter on output so templates never trust stored HTML. https sources only,
+ * no srcdoc, no scripts.
+ */
+function encore_kses_iframe( string $html ): string {
+	$allowed = [
+		'iframe' => [
+			'src'             => true,
+			'title'           => true,
+			'width'           => true,
+			'height'          => true,
+			'style'           => true,
+			'allow'           => true,
+			'allowfullscreen' => true,
+			'frameborder'     => true,
+			'scrolling'       => true,
+			'loading'         => true,
+			'referrerpolicy'  => true,
+			'name'            => true,
+		],
+	];
+	return wp_kses( $html, $allowed, [ 'https' ] );
+}
+
+/**
+ * Click-to-load embed. The iframes sit in an inert <template> until the
+ * visitor presses the button, so nothing third-party loads and no cookies
+ * are set until they ask, the same as encore_video_player().
+ *
+ * @param string $html  Embed code, e.g. encore_setting( 'live_embed' ).
+ * @param string $label Button text, also the iframe title if it has none.
+ * @return string Markup, or '' if there's no usable iframe.
+ */
+function encore_embed( string $html, string $label ): string {
+	$html = encore_kses_iframe( $html );
+	if ( ! preg_match( '~<iframe\b[^>]*\bsrc="(https://[^"]+)"~i', $html, $m ) ) {
+		return '';
+	}
+	$host = preg_replace( '/^www\./', '', (string) wp_parse_url( html_entity_decode( $m[1] ), PHP_URL_HOST ) );
+
+	return sprintf(
+		'<div class="embed"><template>%1$s</template><button type="button" class="btn btn--accent embed__load">%2$s</button><p class="embed__note">%3$s</p></div>',
+		$html, // Filtered by encore_kses_iframe() above.
+		esc_html( $label ),
+		/* translators: %s: embed provider's domain, e.g. bandcamp.com. */
+		esc_html( sprintf( __( 'Loads from %s, which may set its own cookies.', 'encore' ), $host ) )
+	);
+}
+
+/**
  * Section heading + optional intro, used by most modules.
  */
 function encore_section_head( string $title, string $intro = '', string $tag = 'h2' ): void {
