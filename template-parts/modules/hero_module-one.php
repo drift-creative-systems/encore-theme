@@ -1,7 +1,8 @@
 <?php
 /**
  * Hero — full-bleed opener. Blank fields fall back to hub settings:
- * title → Artist Name, text → Tagline, image → Hero Image, video → Hero Video URL.
+ * title → Artist Name, text → Tagline, image → Hero Image, video → Hero Video
+ * (upload), else Hero Video URL.
  *
  * @package Surface_Theme
  */
@@ -19,7 +20,11 @@ $a = surface_args( $args, [
 $title = $a['section_title'] ?: surface_artist_name();
 $text  = $a['section_content'] ?: (string) surface_setting( 'tagline' );
 $image = surface_image_id( $a['background_image'] ) ?: (int) surface_setting( 'hero_image', 0 );
-$video = $a['show_video'] ? (string) surface_setting( 'hero_video' ) : '';
+$video = '';
+if ( $a['show_video'] ) {
+	$video_id = (int) surface_setting( 'hero_video_file', 0 );
+	$video    = ( $video_id ? (string) wp_get_attachment_url( $video_id ) : '' ) ?: (string) surface_setting( 'hero_video' );
+}
 $logo  = surface_logo( 'light', 'large', [ 'class' => 'hero__logo' ] );
 
 // Buttons: the module's own, else next gig + latest release.

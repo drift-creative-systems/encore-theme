@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || exit;
 $a = surface_args( $args, [ 'section_title' => '', 'section_content' => '', 'form' => 'enquiry', 'show_emails' => true ] );
 
 $emails = array_filter( [
+	__( 'General', 'surface-theme' )    => (string) surface_setting( 'general_email' ),
 	__( 'Booking', 'surface-theme' )    => (string) surface_setting( 'booking_email' ),
 	__( 'Management', 'surface-theme' ) => (string) surface_setting( 'management_email' ),
 	__( 'Press', 'surface-theme' )      => (string) surface_setting( 'press_email' ),

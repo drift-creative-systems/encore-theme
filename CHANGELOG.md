@@ -2,6 +2,14 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
+## [2.1.0] - 2026-10-08
+
+Pairs with Drift: Surface 3.1.0.
+
+### Added
+- Hero: plays the uploaded **Hero Video** (`hero_video_file`) when there is one, falling back to Hero Video URL.
+- Contact: lists the **General Email** first, labelled "General".
+
 ## [2.0.1] - 2026-10-08
 
 ### Changed
