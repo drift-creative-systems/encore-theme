@@ -1,5 +1,5 @@
 {
-    "key": "group_encore_page_builder",
+    "key": "group_surface_page_builder",
     "title": "Page Builder",
     "fields": [
         {
@@ -8,7 +8,7 @@
             "name": "page_builder",
             "aria-label": "",
             "type": "flexible_content",
-            "instructions": "Content inside modules (gigs, releases, members\u2026) comes from Airtable. These settings only choose what each section shows.",
+            "instructions": "Content inside modules (gigs, releases, members\u2026) comes from the Drift: Surface Hub. These settings only choose what each section shows.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -29,7 +29,7 @@
                             "name": "section_title",
                             "aria-label": "",
                             "type": "text",
-                            "instructions": "Leave blank to show the logo / Artist Name from Airtable.",
+                            "instructions": "Leave blank to show the logo / Artist Name from the hub.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -49,7 +49,7 @@
                             "name": "section_content",
                             "aria-label": "",
                             "type": "textarea",
-                            "instructions": "Leave blank to use the Tagline from Airtable.",
+                            "instructions": "Leave blank to use the Tagline from the hub.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -69,7 +69,7 @@
                             "name": "background_image",
                             "aria-label": "",
                             "type": "image",
-                            "instructions": "Leave blank to use the Hero Image from Airtable.",
+                            "instructions": "Leave blank to use the Hero Image from the hub.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -94,7 +94,7 @@
                             "name": "show_video",
                             "aria-label": "",
                             "type": "true_false",
-                            "instructions": "Plays the MP4/WebM in Airtable's Hero Video URL behind the title, if set.",
+                            "instructions": "Plays the MP4/WebM in the hub's Hero Video URL behind the title, if set.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -246,7 +246,7 @@
                             "name": "background_image",
                             "aria-label": "",
                             "type": "image",
-                            "instructions": "Leave blank to use the Hero Image from Airtable.",
+                            "instructions": "Leave blank to use the Hero Image from the hub.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -346,7 +346,7 @@
                             "name": "release",
                             "aria-label": "",
                             "type": "post_object",
-                            "instructions": "Blank: the newest release ticked Featured in Airtable, else the newest.",
+                            "instructions": "Blank: the newest release ticked Featured in the hub, else the newest.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -355,7 +355,7 @@
                                 "id": ""
                             },
                             "post_type": [
-                                "encore_release"
+                                "surface_release"
                             ],
                             "post_status": [
                                 "publish"
@@ -1904,7 +1904,7 @@
         "custom_fields"
     ],
     "active": true,
-    "description": "Encore page modules",
+    "description": "Surface page modules",
     "show_in_rest": 0,
     "modified": 1791000000
 }

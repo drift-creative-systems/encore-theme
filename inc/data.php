@@ -2,11 +2,11 @@
 /**
  * data.php — every query the templates need, in one place.
  *
- * All read plain WordPress data that the Encore Website plugin wrote at sync
+ * All read plain WordPress data that the Drift: Surface plugin wrote at sync
  * time. Each one is guarded so a missing post type returns [] rather than
  * an error (e.g. plugin deactivated).
  *
- * @package Encore
+ * @package Surface_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return WP_Post[]
  */
-function encore_query( string $post_type, array $args = [] ): array {
+function surface_query( string $post_type, array $args = [] ): array {
 	if ( ! post_type_exists( $post_type ) ) {
 		return [];
 	}
@@ -40,7 +40,7 @@ function encore_query( string $post_type, array $args = [] ): array {
  * @param int    $limit 0 = no limit.
  * @return WP_Post[]
  */
-function encore_get_gigs( string $when = 'upcoming', int $limit = 0 ): array {
+function surface_get_gigs( string $when = 'upcoming', int $limit = 0 ): array {
 	$args = [
 		'posts_per_page' => $limit > 0 ? $limit : -1,
 		'meta_key'       => 'gig_date', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -51,13 +51,13 @@ function encore_get_gigs( string $when = 'upcoming', int $limit = 0 ): array {
 		$args['meta_query'] = [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			[
 				'key'     => 'gig_date',
-				'value'   => encore_today(),
+				'value'   => surface_today(),
 				'compare' => 'past' === $when ? '<' : '>=',
 				'type'    => 'CHAR', // Y-m-d sorts and compares correctly as text.
 			],
 		];
 	}
-	return encore_query( 'encore_gig', $args );
+	return surface_query( 'surface_gig', $args );
 }
 
 /**
@@ -68,7 +68,7 @@ function encore_get_gigs( string $when = 'upcoming', int $limit = 0 ): array {
  * @param WP_Post[] $posts Posts.
  * @return WP_Post[]
  */
-function encore_sort_by_date_meta( array $posts, string $key ): array {
+function surface_sort_by_date_meta( array $posts, string $key ): array {
 	usort( $posts, static function ( WP_Post $a, WP_Post $b ) use ( $key ) {
 		$da = (string) get_post_meta( $a->ID, $key, true );
 		$db = (string) get_post_meta( $b->ID, $key, true );
@@ -84,32 +84,31 @@ function encore_sort_by_date_meta( array $posts, string $key ): array {
 }
 
 /** @return WP_Post[] Releases, newest first. */
-function encore_get_releases( int $limit = 0, string $type = '' ): array {
+function surface_get_releases( int $limit = 0, string $type = '' ): array {
 	$args = [];
-	if ( $type && taxonomy_exists( 'encore_release_type' ) ) {
-		$args['tax_query'] = [ [ 'taxonomy' => 'encore_release_type', 'field' => 'name', 'terms' => $type ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+	if ( $type && taxonomy_exists( 'surface_release_type' ) ) {
+		$args['tax_query'] = [ [ 'taxonomy' => 'surface_release_type', 'field' => 'name', 'terms' => $type ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 	}
-	$releases = encore_sort_by_date_meta( encore_query( 'encore_release', $args ), 'release_date' );
+	$releases = surface_sort_by_date_meta( surface_query( 'surface_release', $args ), 'release_date' );
 	return $limit > 0 ? array_slice( $releases, 0, $limit ) : $releases;
 }
 
 /** The release to feature: newest one ticked Featured, else the newest. */
-function encore_get_latest_release(): ?WP_Post {
-	$featured = encore_sort_by_date_meta( encore_query( 'encore_release', [
+function surface_get_latest_release(): ?WP_Post {
+	$featured = surface_sort_by_date_meta( surface_query( 'surface_release', [
 		'meta_query' => [ [ 'key' => 'featured', 'value' => '1' ] ], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 	] ), 'release_date' );
 	if ( $featured ) {
 		return $featured[0];
 	}
-	$latest = encore_get_releases( 1 );
+	$latest = surface_get_releases( 1 );
 	return $latest[0] ?? null;
 }
 
 /** @return WP_Post[] Tracks of a release, in tracklist order. */
-function encore_get_tracks( int $release_id ): array {
-	$linked = function_exists( 'encore_website_linked_posts' ) ? 'encore_website_linked_posts' : ( function_exists( 'drift_linked_posts' ) ? 'drift_linked_posts' : '' );
-	if ( $linked ) {
-		$tracks = $linked( $release_id, 'tracks' );
+function surface_get_tracks( int $release_id ): array {
+	if ( function_exists( 'drift_surface_linked_posts' ) ) {
+		$tracks = drift_surface_linked_posts( $release_id, 'tracks' );
 		if ( $tracks ) {
 			return $tracks;
 		}
@@ -118,50 +117,50 @@ function encore_get_tracks( int $release_id ): array {
 }
 
 /** @return WP_Post[] */
-function encore_get_members(): array {
-	return encore_query( 'encore_member' );
+function surface_get_members(): array {
+	return surface_query( 'surface_member' );
 }
 
 /** @return WP_Post[] */
-function encore_get_press( int $limit = 0 ): array {
-	return encore_query( 'encore_press', [ 'posts_per_page' => $limit > 0 ? $limit : -1 ] );
+function surface_get_press( int $limit = 0 ): array {
+	return surface_query( 'surface_press', [ 'posts_per_page' => $limit > 0 ? $limit : -1 ] );
 }
 
 /** @return WP_Post[] */
-function encore_get_merch(): array {
-	return encore_query( 'encore_merch' );
+function surface_get_merch(): array {
+	return surface_query( 'surface_merch' );
 }
 
 /** @return WP_Post[] */
-function encore_get_photos( string $album = '', int $limit = 0 ): array {
+function surface_get_photos( string $album = '', int $limit = 0 ): array {
 	$args = [ 'posts_per_page' => $limit > 0 ? $limit : -1 ];
-	if ( $album && taxonomy_exists( 'encore_album' ) ) {
-		$args['tax_query'] = [ [ 'taxonomy' => 'encore_album', 'field' => 'name', 'terms' => $album ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+	if ( $album && taxonomy_exists( 'surface_album' ) ) {
+		$args['tax_query'] = [ [ 'taxonomy' => 'surface_album', 'field' => 'name', 'terms' => $album ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 	}
-	return encore_query( 'encore_photo', $args );
+	return surface_query( 'surface_photo', $args );
 }
 
 /** @return WP_Term[] Albums that have photos. */
-function encore_get_albums(): array {
-	if ( ! taxonomy_exists( 'encore_album' ) ) {
+function surface_get_albums(): array {
+	if ( ! taxonomy_exists( 'surface_album' ) ) {
 		return [];
 	}
-	$terms = get_terms( [ 'taxonomy' => 'encore_album', 'hide_empty' => true ] );
+	$terms = get_terms( [ 'taxonomy' => 'surface_album', 'hide_empty' => true ] );
 	return is_wp_error( $terms ) ? [] : $terms;
 }
 
 /** @return WP_Post[] Videos, newest first (undated last). */
-function encore_get_videos( bool $featured_only = false, int $limit = 0 ): array {
+function surface_get_videos( bool $featured_only = false, int $limit = 0 ): array {
 	$args = [];
 	if ( $featured_only ) {
 		$args['meta_query'] = [ [ 'key' => 'featured', 'value' => '1' ] ]; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 	}
-	$videos = encore_sort_by_date_meta( encore_query( 'encore_video', $args ), 'video_date' );
+	$videos = surface_sort_by_date_meta( surface_query( 'surface_video', $args ), 'video_date' );
 	return $limit > 0 ? array_slice( $videos, 0, $limit ) : $videos;
 }
 
 /** @return WP_Post[] */
-function encore_get_news( int $limit = 6 ): array {
+function surface_get_news( int $limit = 6 ): array {
 	return get_posts( [
 		'post_type'      => 'post',
 		'post_status'    => 'publish',

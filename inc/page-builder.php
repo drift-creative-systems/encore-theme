@@ -3,8 +3,8 @@
  * page-builder.php — renders a page's modules.
  *
  * Rows come from the ACF flexible content field `page_builder`
- * (acf-json/group_encore_page_builder.json). When a page has no rows — or
- * ACF Pro isn't active — the rows the Encore Website plugin's map defines for
+ * (acf-json/group_surface_page_builder.json). When a page has no rows — or
+ * ACF Pro isn't active — the rows the Drift: Surface plugin's map defines for
  * that page are used instead (front page = the map's "home" page, others
  * matched by slug), so a fresh site looks finished before anyone opens the
  * editor.
@@ -14,7 +14,7 @@
  * $args and never call ACF themselves. Child themes can override a variant
  * file in an emergency (CLAUDE.md rule 3).
  *
- * @package Encore
+ * @package Surface_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @return array[]
  */
-function encore_page_rows( ?int $post_id = null ): array {
+function surface_page_rows( ?int $post_id = null ): array {
 	static $cache = [];
 	$post_id = $post_id ?: (int) get_queried_object_id();
 
@@ -38,22 +38,22 @@ function encore_page_rows( ?int $post_id = null ): array {
 		$rows  = is_array( $saved ) ? $saved : [];
 	}
 	if ( ! $rows && $post_id ) {
-		$rows = encore_fallback_rows( $post_id );
+		$rows = surface_fallback_rows( $post_id );
 	}
 
-	$cache[ $post_id ] = (array) apply_filters( 'encore_page_rows', $rows, $post_id );
+	$cache[ $post_id ] = (array) apply_filters( 'surface_page_rows', $rows, $post_id );
 	return $cache[ $post_id ];
 }
 
 /**
- * Default rows from the Encore Website plugin's product map.
+ * Default rows from the Drift: Surface plugin's product map.
  *
  * @return array[]
  */
-function encore_fallback_rows( int $post_id ): array {
+function surface_fallback_rows( int $post_id ): array {
 	$rows = [];
 
-	$creator = class_exists( 'Encore_Website_Page_Creator' ) ? 'Encore_Website_Page_Creator' : ( class_exists( 'Drift_Website_Page_Creator' ) ? 'Drift_Website_Page_Creator' : '' );
+	$creator = class_exists( 'Drift_Surface_Page_Creator' ) ? 'Drift_Surface_Page_Creator' : '';
 	if ( $creator ) {
 		$post    = get_post( $post_id );
 		$is_home = (int) get_option( 'page_on_front' ) === $post_id;
@@ -66,16 +66,16 @@ function encore_fallback_rows( int $post_id ): array {
 		}
 	}
 
-	return (array) apply_filters( 'encore_fallback_rows', $rows, $post_id );
+	return (array) apply_filters( 'surface_fallback_rows', $rows, $post_id );
 }
 
 /** Layout slugs on the current page (for loading module CSS in <head>). */
-function encore_current_layouts(): array {
+function surface_current_layouts(): array {
 	if ( ! is_singular( 'page' ) && ! is_front_page() ) {
 		return [];
 	}
 	$layouts = [];
-	foreach ( encore_page_rows() as $row ) {
+	foreach ( surface_page_rows() as $row ) {
 		if ( ! empty( $row['acf_fc_layout'] ) ) {
 			$layouts[] = sanitize_key( (string) $row['acf_fc_layout'] );
 		}
@@ -88,7 +88,7 @@ function encore_current_layouts(): array {
  *
  * @param array[] $rows Rows with 'acf_fc_layout' + sub-field values.
  */
-function encore_render_rows( array $rows ): void {
+function surface_render_rows( array $rows ): void {
 	foreach ( array_values( $rows ) as $i => $row ) {
 		$layout = sanitize_key( (string) ( $row['acf_fc_layout'] ?? '' ) );
 		if ( '' === $layout ) {
@@ -103,7 +103,7 @@ function encore_render_rows( array $rows ): void {
 
 		if ( ! $file ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				trigger_error( esc_html( "Encore: no template for module \"{$layout}\"." ), E_USER_NOTICE ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+				trigger_error( esc_html( "Surface theme: no template for module \"{$layout}\"." ), E_USER_NOTICE ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
 			}
 			continue;
 		}

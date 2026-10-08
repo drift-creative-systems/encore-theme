@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 ?><!doctype html>
@@ -12,6 +12,6 @@ defined( 'ABSPATH' ) || exit;
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'encore' ); ?></a>
+<a class="skip-link screen-reader-text" href="#main"><?php esc_html_e( 'Skip to content', 'surface-theme' ); ?></a>
 <?php get_template_part( 'template-parts/header/site-header' ); ?>
 <main id="main" class="site-main" tabindex="-1">

@@ -2,7 +2,7 @@
 /**
  * News posts (and any other single without its own template).
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 get_header();
@@ -16,15 +16,15 @@ while ( have_posts() ) :
 			<h1 class="article__title"><?php the_title(); ?></h1>
 		</header>
 		<?php if ( has_post_thumbnail() ) : ?>
-			<figure class="article__image wrap"><?php the_post_thumbnail( 'encore-wide', [ 'loading' => 'eager' ] ); ?></figure>
+			<figure class="article__image wrap"><?php the_post_thumbnail( 'surface-wide', [ 'loading' => 'eager' ] ); ?></figure>
 		<?php endif; ?>
 		<div class="article__body prose wrap wrap--narrow"><?php the_content(); ?></div>
 		<footer class="article__foot wrap wrap--narrow">
 			<?php
-			$encore_news = get_post_type_archive_link( 'post' ) ?: home_url( '/news/' );
-			$encore_page = get_page_by_path( 'news' );
+			$surface_news = get_post_type_archive_link( 'post' ) ?: home_url( '/news/' );
+			$surface_page = get_page_by_path( 'news' );
 			?>
-			<a class="text-link" href="<?php echo esc_url( $encore_page ? get_permalink( $encore_page ) : $encore_news ); ?>">&larr; <?php esc_html_e( 'All news', 'encore' ); ?></a>
+			<a class="text-link" href="<?php echo esc_url( $surface_page ? get_permalink( $surface_page ) : $surface_news ); ?>">&larr; <?php esc_html_e( 'All news', 'surface-theme' ); ?></a>
 		</footer>
 	</article>
 	<?php

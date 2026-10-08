@@ -2,12 +2,24 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2026-10-08
+
+Renamed from **Encore** to **Drift: Surface Theme**, to match the Drift: Surface plugin (3.x). There are no client installs of 1.x, so this is a new theme folder rather than an in-place update.
 
 ### Changed
+- Theme name **Drift: Surface Theme**. Slug, folder, text domain (`surface-theme`), release zips (`surface-theme.zip`, `surface-bundle.zip`) and GitHub repo (`drift-creative-systems/surface-theme`) are renamed. The self-updater points at the new repo.
+- Code prefixes: `surface_*` functions, hooks and filters, `SURFACE_*` constants, `surface-*` CSS classes, style/script handles and image sizes, `Surface` JS object, `surfaceGaLoaded`, `surface_consent` cookie, `surface_ga4_id` Customiser setting. Child themes use a `Surface Fonts:` header and `Template: surface-theme`.
+- Data names match the plugin's renamed map: `surface_gig`, `surface_release`, `surface_track`, `surface_member`, `surface_photo`, `surface_video`, `surface_press` and `surface_merch` post types (`single-surface_gig.php`, `single-surface_release.php`), and `surface_release_type` and `surface_album` taxonomies. The ACF group is `group_surface_page_builder` (`acf-json/group_surface_page_builder.json`). Layout names are unchanged.
+- Plugin API: the theme calls `drift_surface_setting()`, `drift_surface_linked_posts()`, `drift_surface_form_hidden_fields()` and `Drift_Surface_Page_Creator`. The requirements notice installs `drift-surface.zip` from `drift-creative-systems/drift-surface` and opens its admin screen after activating. Wizard image placeholders are recognised by their `__drift_surface_` prefix.
+- Private-repo token: `SURFACE_THEME_GITHUB_TOKEN`, or the plugin's `DRIFT_SURFACE_GITHUB_TOKEN`.
+- Body class when the plugin is missing: `no-drift-surface`.
+- Content is described as coming from the Drift: Surface Hub, not Airtable (the plugin is hub-only from 3.0.0). This covers the ACF field instructions, the theme description and code comments.
 - `.btn--ghost:hover` text uses `var(--on-accent)` (was `var(--bg)`). The hover background is still `var(--text)`, so set the two to contrasting colours in a child theme.
 - Header stays pinned on pages that open with a hero. It starts transparent over the image and fades to the solid header once the page scrolls (`.is-scrolled`, toggled in `main.js`). Other pages were already sticky.
 - Footer credit is now "Website by Drift Creative Systems", linked to https://driftcreativesystems.co.uk/. Author URI points there too.
+
+### Removed
+- Fallbacks to Encore Website 2.x (`encore_website_*`, `Encore_Website_Page_Creator`, `ENCORE_WEBSITE_GITHUB_TOKEN`) and Drift Website 1.x (`drift_*`, `Drift_Website_Page_Creator`, `DRIFT_WEBSITE_GITHUB_TOKEN`, `__drift_` placeholders). Neither writes the `surface_*` data this version reads.
 
 ### Fixed
 - Forms posted to `/current-page/[object HTMLInputElement]` (a 404) and failed with "JSON.parse: unexpected character". The script read `form.action`, which returns the form's `<input name="action">` rather than its `action` attribute; it now uses `getAttribute( 'action' )`. (1.3.0 wrongly blamed the `page` field; renaming it to `source_page` was harmless but not the fix.)

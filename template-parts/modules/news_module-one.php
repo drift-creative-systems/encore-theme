@@ -2,20 +2,20 @@
 /**
  * News — latest posts.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 
-$a    = encore_args( $args, [ 'section_title' => '', 'limit' => 3 ] );
-$news = encore_get_news( (int) $a['limit'] ?: 3 );
+$a    = surface_args( $args, [ 'section_title' => '', 'limit' => 3 ] );
+$news = surface_get_news( (int) $a['limit'] ?: 3 );
 if ( ! $news ) {
 	return;
 }
 
-encore_module_open( $a, 'news' );
+surface_module_open( $a, 'news' );
 ?>
 	<div class="wrap">
-		<?php encore_section_head( (string) $a['section_title'] ); ?>
+		<?php surface_section_head( (string) $a['section_title'] ); ?>
 		<div class="card-grid">
 			<?php
 			foreach ( $news as $item ) {

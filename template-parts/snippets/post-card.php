@@ -2,7 +2,7 @@
 /**
  * News card. $args['post'] (WP_Post).
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -11,7 +11,7 @@ $item = $args['post'];
 <article class="post-card">
 	<a class="post-card__link" href="<?php echo esc_url( get_permalink( $item ) ); ?>">
 		<?php if ( has_post_thumbnail( $item ) ) : ?>
-			<span class="post-card__image"><?php echo get_the_post_thumbnail( $item, 'encore-wide', [ 'alt' => '' ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<span class="post-card__image"><?php echo get_the_post_thumbnail( $item, 'surface-wide', [ 'alt' => '' ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		<?php endif; ?>
 		<time class="post-card__date" datetime="<?php echo esc_attr( get_the_date( 'c', $item ) ); ?>"><?php echo esc_html( get_the_date( 'j M Y', $item ) ); ?></time>
 		<span class="post-card__title"><?php echo esc_html( get_the_title( $item ) ); ?></span>

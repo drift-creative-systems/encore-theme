@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 ?>

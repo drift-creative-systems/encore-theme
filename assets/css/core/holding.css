@@ -1,9 +1,9 @@
 /**
- * Holding page (template-parts/holding.php), shown while the Encore Website
+ * Holding page (template-parts/holding.php), shown while the Drift: Surface
  * plugin isn't active. Uses the base tokens; no web fonts are loaded.
  */
 
-.encore-holding {
+.surface-holding {
 	display: grid;
 	min-height: 100vh;
 	min-height: 100svh;
@@ -12,24 +12,24 @@
 	text-align: center;
 }
 
-.encore-holding__inner {
+.surface-holding__inner {
 	max-width: var(--wrap-narrow);
 }
 
-.encore-holding__title {
+.surface-holding__title {
 	font-size: var(--step-4);
 }
 
-.encore-holding__text {
+.surface-holding__text {
 	color: var(--muted);
 	font-size: var(--step-1);
 }
 
-.encore-holding__admin {
+.surface-holding__admin {
 	margin-top: 2rem;
 	font-size: var(--step--1);
 }
 
-.encore-holding__admin a {
+.surface-holding__admin a {
 	color: var(--accent);
 }

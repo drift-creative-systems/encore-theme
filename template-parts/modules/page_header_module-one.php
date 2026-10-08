@@ -2,22 +2,22 @@
 /**
  * Page header — the inner-page opener. Image falls back to Hero Image.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 
-$a = encore_args( $args, [
+$a = surface_args( $args, [
 	'section_title'    => '',
 	'section_content'  => '',
 	'background_image' => '',
 ] );
 
-$image = encore_image_id( $a['background_image'] ) ?: (int) encore_setting( 'hero_image', 0 );
+$image = surface_image_id( $a['background_image'] ) ?: (int) surface_setting( 'hero_image', 0 );
 
-encore_module_open( $a, 'page-header' . ( $image ? ' page-header--media' : '' ) );
+surface_module_open( $a, 'page-header' . ( $image ? ' page-header--media' : '' ) );
 ?>
 	<?php if ( $image ) : ?>
-		<div class="page-header__media" aria-hidden="true"><?php echo wp_get_attachment_image( $image, 'encore-hero', false, [ 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ] ); ?></div>
+		<div class="page-header__media" aria-hidden="true"><?php echo wp_get_attachment_image( $image, 'surface-hero', false, [ 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ] ); ?></div>
 	<?php endif; ?>
 	<div class="page-header__content wrap">
 		<h1 class="page-header__title"><?php echo esc_html( $a['section_title'] ?: get_the_title() ); ?></h1>

@@ -1,13 +1,13 @@
 /**
- * Encore front end. Vanilla JS, no dependencies, deferred.
+ * Surface theme front end. Vanilla JS, no dependencies, deferred.
  *
  *   Menu toggle · header over hero · click-to-play video · gallery filter + lightbox ·
- *   Encore Website forms (AJAX to the plugin) · cookie consent for optional GA4
+ *   Drift: Surface forms (AJAX to the plugin) · cookie consent for optional GA4
  */
 (function () {
 	'use strict';
 
-	var cfg = window.Encore || {};
+	var cfg = window.Surface || {};
 	var t = cfg.i18n || {};
 
 	/* ── Menu ─────────────────────────────────────────────────────────── */
@@ -137,8 +137,8 @@
 		lightbox(link.href, link.getAttribute('data-caption'), img ? img.alt : '');
 	});
 
-	/* ── Encore Website forms ─────────────────────────────────────────── */
-	document.querySelectorAll('form.encore-form').forEach(function (form) {
+	/* ── Drift: Surface forms ─────────────────────────────────────────── */
+	document.querySelectorAll('form.surface-form').forEach(function (form) {
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
 			var status = form.querySelector('.form-status');
@@ -190,7 +190,7 @@
 
 	/* ── Consent (only rendered when a GA4 ID is set) ─────────────────── */
 	var banner = document.querySelector('.consent');
-	var COOKIE = 'encore_consent';
+	var COOKIE = 'surface_consent';
 
 	function readConsent() {
 		var m = document.cookie.match(new RegExp('(?:^|; )' + COOKIE + '=([^;]*)'));
@@ -203,8 +203,8 @@
 	}
 
 	function loadAnalytics() {
-		if (!cfg.ga4 || window.encoreGaLoaded) { return; }
-		window.encoreGaLoaded = true;
+		if (!cfg.ga4 || window.surfaceGaLoaded) { return; }
+		window.surfaceGaLoaded = true;
 		window.dataLayer = window.dataLayer || [];
 		window.gtag = function () { window.dataLayer.push(arguments); };
 		window.gtag('js', new Date());
@@ -231,7 +231,7 @@
 			banner.hidden = true;
 			if (value === 'granted') {
 				loadAnalytics();
-			} else if (window.encoreGaLoaded) {
+			} else if (window.surfaceGaLoaded) {
 				// Withdrawn after accepting: stop on the next page load.
 				window.location.reload();
 			}

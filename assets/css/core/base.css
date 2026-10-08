@@ -1,9 +1,9 @@
 /**
- * Encore base: design tokens, reset, typography, layout, buttons, forms.
+ * Surface base: design tokens, reset, typography, layout, buttons, forms.
  *
  * Every visual decision a band might want to change is a custom property in
  * :root below. Child themes override these in their style.css (see
- * DESIGN.md). --accent / --accent-2 / --on-accent come from Airtable and are
+ * DESIGN.md). --accent / --accent-2 / --on-accent come from the hub and are
  * printed last by inc/brand.php, so leave those to the band's data.
  */
 
@@ -125,7 +125,7 @@ ul.link-list--release {margin-top:20px}
 .facts dd { margin: 0; }
 
 /* Forms */
-.encore-form { display: grid; gap: 1rem; }
+.surface-form { display: grid; gap: 1rem; }
 .field { display: grid; gap: 0.35rem; }
 .field__label { font-size: var(--step--1); font-weight: 600; color: var(--muted); }
 .field input, .field select, .field textarea { width: 100%; padding: 0.8em 0.9em; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--text); }
@@ -133,11 +133,11 @@ ul.link-list--release {margin-top:20px}
 .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
 .field.is-invalid input, .field.is-invalid textarea, .field.is-invalid select { border-color: var(--accent); box-shadow: inset 4px 0 0 var(--accent); }
 .field-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; }
-.encore-form button[type="submit"] { justify-self: start; }
+.surface-form button[type="submit"] { justify-self: start; }
 .form-status { margin: 0; min-height: 1.5em; font-weight: 600; }
 .form-status.is-error { color: var(--accent); }
-.encore-form.is-sent .field, .encore-form.is-sent .field-row, .encore-form.is-sent button { display: none; }
-.encore-form.is-sent .form-status { font-size: var(--step-2); font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); line-height: 1.1; }
+.surface-form.is-sent .field, .surface-form.is-sent .field-row, .surface-form.is-sent button { display: none; }
+.surface-form.is-sent .form-status { font-size: var(--step-2); font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: var(--display-weight); line-height: 1.1; }
 
 /* Shared media */
 .art-placeholder { display: block; aspect-ratio: 1; background: linear-gradient(135deg, var(--surface), rgba(var(--accent-rgb), 0.35)); }

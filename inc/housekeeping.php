@@ -5,7 +5,7 @@
  * rewrite (empty alt is correct for decorative images), and forcing
  * target="_blank" on every external link via JS.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -49,13 +49,13 @@ add_action( 'wp_dashboard_setup', static function () {
 remove_action( 'welcome_panel', 'wp_welcome_panel' );
 
 // Red bar on the admin bar while the site is hidden from search engines.
-$encore_noindex_bar = static function () {
+$surface_noindex_bar = static function () {
 	if ( '0' === (string) get_option( 'blog_public' ) && is_admin_bar_showing() ) {
 		echo '<style>#wpadminbar{border-top:4px solid #cf0000}</style>';
 	}
 };
-add_action( 'admin_head', $encore_noindex_bar );
-add_action( 'wp_head', $encore_noindex_bar );
+add_action( 'admin_head', $surface_noindex_bar );
+add_action( 'wp_head', $surface_noindex_bar );
 
 // Uploads: WebP, and sanitised SVG.
 add_filter( 'upload_mimes', static function ( array $mimes ): array {
@@ -72,7 +72,7 @@ add_filter( 'wp_handle_upload_prefilter', static function ( array $file ): array
 	$dom = new DOMDocument();
 	libxml_use_internal_errors( true );
 	if ( ! $dom->loadXML( (string) file_get_contents( $file['tmp_name'] ), LIBXML_NONET ) ) {
-		$file['error'] = __( 'That SVG could not be read.', 'encore' );
+		$file['error'] = __( 'That SVG could not be read.', 'surface-theme' );
 		return $file;
 	}
 	libxml_clear_errors();
@@ -101,12 +101,12 @@ add_filter( 'wp_handle_upload_prefilter', static function ( array $file ): array
 } );
 
 // Featured image in RSS.
-$encore_rss_image = static function ( $content ) {
+$surface_rss_image = static function ( $content ) {
 	$post = get_post();
 	return $post && has_post_thumbnail( $post ) ? get_the_post_thumbnail( $post, 'large' ) . $content : $content;
 };
-add_filter( 'the_excerpt_rss', $encore_rss_image );
-add_filter( 'the_content_feed', $encore_rss_image );
+add_filter( 'the_excerpt_rss', $surface_rss_image );
+add_filter( 'the_content_feed', $surface_rss_image );
 
 // Light email obfuscation in post content (synced bios etc.).
 add_filter( 'the_content', static function ( $content ) {

@@ -1,8 +1,8 @@
-# Encore design tokens
+# Drift: Surface Theme design tokens
 
 Everything a band's look can change is set in its child theme's `style.css`, in a `:root { }` block. The defaults are in `assets/css/core/base.css`.
 
-## Set by Airtable (don't override)
+## Set by the hub (don't override)
 
 | Token | Source |
 |---|---|
@@ -41,10 +41,10 @@ For a light theme, set all five colour tokens (see `hollin-wren`).
 **Fonts:** add a header line to the child's `style.css` comment block:
 
 ```
-Encore Fonts: https://fonts.googleapis.com/css2?family=Young+Serif&family=Work+Sans:wght@400;600;700&display=swap
+Surface Fonts: https://fonts.googleapis.com/css2?family=Young+Serif&family=Work+Sans:wght@400;600;700&display=swap
 ```
 
-Only `fonts.googleapis.com` URLs are accepted. Use `Encore Fonts: none` for system fonts. Without the line, Archivo loads.
+Only `fonts.googleapis.com` URLs are accepted. Use `Surface Fonts: none` for system fonts. Without the line, Archivo loads.
 
 ## Shape and space
 

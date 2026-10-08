@@ -1,13 +1,13 @@
 <?php
 /**
- * Hero — full-bleed opener. Blank fields fall back to Airtable settings:
+ * Hero — full-bleed opener. Blank fields fall back to hub settings:
  * title → Artist Name, text → Tagline, image → Hero Image, video → Hero Video URL.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 
-$a = encore_args( $args, [
+$a = surface_args( $args, [
 	'section_title'    => '',
 	'section_content'  => '',
 	'background_image' => '',
@@ -16,11 +16,11 @@ $a = encore_args( $args, [
 	'cta_url'          => '',
 ] );
 
-$title = $a['section_title'] ?: encore_artist_name();
-$text  = $a['section_content'] ?: (string) encore_setting( 'tagline' );
-$image = encore_image_id( $a['background_image'] ) ?: (int) encore_setting( 'hero_image', 0 );
-$video = $a['show_video'] ? (string) encore_setting( 'hero_video' ) : '';
-$logo  = encore_logo( 'light', 'large', [ 'class' => 'hero__logo' ] );
+$title = $a['section_title'] ?: surface_artist_name();
+$text  = $a['section_content'] ?: (string) surface_setting( 'tagline' );
+$image = surface_image_id( $a['background_image'] ) ?: (int) surface_setting( 'hero_image', 0 );
+$video = $a['show_video'] ? (string) surface_setting( 'hero_video' ) : '';
+$logo  = surface_logo( 'light', 'large', [ 'class' => 'hero__logo' ] );
 
 // Buttons: the module's own, else next gig + latest release.
 $buttons = [];
@@ -28,24 +28,24 @@ if ( $a['cta_label'] && $a['cta_url'] ) {
 	$buttons[] = [ $a['cta_label'], $a['cta_url'], 'accent' ];
 } else {
 	$live = get_page_by_path( 'live' );
-	if ( $live && encore_get_gigs( 'upcoming', 1 ) ) {
-		$buttons[] = [ __( 'Live dates', 'encore' ), get_permalink( $live ), 'accent' ];
+	if ( $live && surface_get_gigs( 'upcoming', 1 ) ) {
+		$buttons[] = [ __( 'Live dates', 'surface-theme' ), get_permalink( $live ), 'accent' ];
 	}
-	$latest = encore_get_latest_release();
+	$latest = surface_get_latest_release();
 	if ( $latest ) {
 		/* translators: %s: release title. */
-		$buttons[] = [ sprintf( __( 'Listen to %s', 'encore' ), $latest->post_title ), get_permalink( $latest ), 'ghost' ];
+		$buttons[] = [ sprintf( __( 'Listen to %s', 'surface-theme' ), $latest->post_title ), get_permalink( $latest ), 'ghost' ];
 	}
 }
 
-encore_module_open( $a, 'hero' . ( $image || $video ? ' hero--media' : '' ) );
+surface_module_open( $a, 'hero' . ( $image || $video ? ' hero--media' : '' ) );
 ?>
 	<div class="hero__media" aria-hidden="true">
 		<?php
 		if ( $video && preg_match( '/\.(mp4|webm)(\?|$)/i', $video ) ) {
 			printf( '<video class="hero__video" src="%s" autoplay muted loop playsinline preload="metadata"></video>', esc_url( $video ) );
 		} elseif ( $image ) {
-			echo wp_get_attachment_image( $image, 'encore-hero', false, [ 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'class' => 'hero__image' ] );
+			echo wp_get_attachment_image( $image, 'surface-hero', false, [ 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'class' => 'hero__image' ] );
 		}
 		?>
 	</div>

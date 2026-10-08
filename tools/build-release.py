@@ -1,18 +1,18 @@
 """Builds the release zips for a GitHub release.
 
-    dist/encore-theme.zip   the theme, under an encore-theme/ top folder
-    dist/encore-bundle.zip  encore-theme.zip + encore-website.zip + README.txt,
+    dist/surface-theme.zip   the theme, under a surface-theme/ top folder
+    dist/surface-bundle.zip  surface-theme.zip + drift-surface.zip + README.txt,
                             for installing the pair by hand
 
 Entries use forward slashes, so WordPress unpacks them correctly on any host
 (PowerShell 5.1's Compress-Archive writes backslashes, which break on Linux).
 
-encore-website.zip is taken from --plugin-zip, or downloaded from the latest
-Encore Website release.
+drift-surface.zip is taken from --plugin-zip, or downloaded from the latest
+Drift: Surface release.
 
 Usage, from the theme folder:
     python tools/build-release.py
-    python tools/build-release.py --plugin-zip ../../plugins/encore-website/dist/encore-website.zip
+    python tools/build-release.py --plugin-zip ../../plugins/drift-surface/dist/drift-surface.zip
 """
 
 import argparse
@@ -21,25 +21,25 @@ import re
 import urllib.request
 import zipfile
 
-SLUG = "encore-theme"
-PLUGIN_ZIP_URL = "https://github.com/drift-creative-systems/encore-website/releases/latest/download/encore-website.zip"
+SLUG = "surface-theme"
+PLUGIN_ZIP_URL = "https://github.com/drift-creative-systems/drift-surface/releases/latest/download/drift-surface.zip"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXCLUDE_DIRS = {".git", "tests", "tools", "dist", "node_modules", ".idea", ".vscode"}
 EXCLUDE_FILES = {".DS_Store", "Thumbs.db", "CLAUDE.md"}  # CLAUDE.md is local-only (global gitignore)
 
-BUNDLE_README = """Encore - theme {theme} + Encore Website plugin {plugin}
+BUNDLE_README = """Drift: Surface - Surface theme {theme} + Drift: Surface plugin {plugin}
 
 The theme and plugin only work as a pair. Without the plugin, the site shows
 a "coming soon" page; without the theme, the plugin's Setup Wizard is off.
 
 Install (either order works):
-1. Plugins > Add New > Upload Plugin > encore-website.zip > Install > Activate.
-2. Appearance > Themes > Add New > Upload Theme > encore-theme.zip > Install > Activate.
-3. Encore Website > Connection: add the band's Airtable base and token, then run the Setup Wizard.
+1. Plugins > Add New > Upload Plugin > drift-surface.zip > Install > Activate.
+2. Appearance > Themes > Add New > Upload Theme > surface-theme.zip > Install > Activate.
+3. Drift: Surface > Connection: add the band's hub address, then run the Setup Wizard.
 
 Both update themselves from GitHub after that:
-https://github.com/drift-creative-systems/encore-theme
-https://github.com/drift-creative-systems/encore-website
+https://github.com/drift-creative-systems/surface-theme
+https://github.com/drift-creative-systems/drift-surface
 """
 
 
@@ -78,7 +78,7 @@ def plugin_zip_bytes(path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--plugin-zip", help="local encore-website.zip (default: latest GitHub release)")
+    parser.add_argument("--plugin-zip", help="local drift-surface.zip (default: latest GitHub release)")
     args = parser.parse_args()
 
     out_dir = os.path.join(ROOT, "dist")
@@ -86,22 +86,22 @@ def main():
     theme_zip = build_theme(out_dir)
 
     plugin = plugin_zip_bytes(args.plugin_zip)
-    plugin_tmp = os.path.join(out_dir, "encore-website.zip")
+    plugin_tmp = os.path.join(out_dir, "drift-surface.zip")
     with open(plugin_tmp, "wb") as fh:
         fh.write(plugin)
     with zipfile.ZipFile(plugin_tmp) as zf:
         # Fail loudly rather than bundle something WordPress can't install.
-        if "encore-website/encore-website.php" not in zf.namelist():
-            raise SystemExit("encore-website.zip has no encore-website/encore-website.php - wrong file?")
-        plugin_version = header_version(zf.read("encore-website/encore-website.php").decode("utf-8"), r"^\s*\*\s*Version:\s*(.+)$")
+        if "drift-surface/drift-surface.php" not in zf.namelist():
+            raise SystemExit("drift-surface.zip has no drift-surface/drift-surface.php - wrong file?")
+        plugin_version = header_version(zf.read("drift-surface/drift-surface.php").decode("utf-8"), r"^\s*\*\s*Version:\s*(.+)$")
 
     with open(os.path.join(ROOT, "style.css"), encoding="utf-8") as fh:
         theme_version = header_version(fh.read(), r"^Version:\s*(.+)$")
 
-    bundle = os.path.join(out_dir, "encore-bundle.zip")
+    bundle = os.path.join(out_dir, "surface-bundle.zip")
     with zipfile.ZipFile(bundle, "w", zipfile.ZIP_DEFLATED) as zf:
-        zf.write(theme_zip, "encore-theme.zip")
-        zf.write(plugin_tmp, "encore-website.zip")
+        zf.write(theme_zip, "surface-theme.zip")
+        zf.write(plugin_tmp, "drift-surface.zip")
         zf.writestr("README.txt", BUNDLE_README.format(theme=theme_version, plugin=plugin_version))
     os.remove(plugin_tmp)
     print(f"{bundle} (theme {theme_version}, plugin {plugin_version}, {os.path.getsize(bundle) // 1024} KB)")

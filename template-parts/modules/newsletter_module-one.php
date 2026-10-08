@@ -1,37 +1,37 @@
 <?php
 /**
- * Mailing list — signs up into Airtable "Subscribers" via the Encore Website plugin,
+ * Mailing list — signs up into the hub's "Subscribers" via the Drift: Surface plugin,
  * or links to the band's own signup page (Mailing List URL) if they use one.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 
-$a        = encore_args( $args, [ 'section_title' => '', 'section_content' => '' ] );
-$external = (string) encore_setting( 'mailing_list_url' );
-$can_form = encore_plugin_ready();
+$a        = surface_args( $args, [ 'section_title' => '', 'section_content' => '' ] );
+$external = (string) surface_setting( 'mailing_list_url' );
+$can_form = surface_plugin_ready();
 if ( ! $external && ! $can_form ) {
 	return;
 }
 
-encore_module_open( $a, 'newsletter' );
+surface_module_open( $a, 'newsletter' );
 ?>
 	<div class="wrap newsletter__inner">
-		<?php encore_section_head( (string) ( $a['section_title'] ?: __( 'Mailing list', 'encore' ) ), (string) ( $a['section_content'] ?: __( 'New music and tour dates, first. No spam.', 'encore' ) ) ); ?>
+		<?php surface_section_head( (string) ( $a['section_title'] ?: __( 'Mailing list', 'surface-theme' ) ), (string) ( $a['section_content'] ?: __( 'New music and tour dates, first. No spam.', 'surface-theme' ) ) ); ?>
 		<?php if ( $external ) : ?>
-			<p class="btn-row"><a class="btn btn--accent btn--large" href="<?php echo esc_url( $external ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Sign up', 'encore' ); ?></a></p>
+			<p class="btn-row"><a class="btn btn--accent btn--large" href="<?php echo esc_url( $external ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Sign up', 'surface-theme' ); ?></a></p>
 		<?php else : ?>
-			<form class="encore-form newsletter__form" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" novalidate>
-				<?php encore_form_hidden_fields( 'newsletter' ); ?>
+			<form class="surface-form newsletter__form" method="post" action="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>" novalidate>
+				<?php surface_form_hidden_fields( 'newsletter' ); ?>
 				<label class="field">
-					<span class="field__label"><?php esc_html_e( 'First name', 'encore' ); ?></span>
+					<span class="field__label"><?php esc_html_e( 'First name', 'surface-theme' ); ?></span>
 					<input type="text" name="name" autocomplete="given-name">
 				</label>
 				<label class="field">
-					<span class="field__label"><?php esc_html_e( 'Email', 'encore' ); ?></span>
+					<span class="field__label"><?php esc_html_e( 'Email', 'surface-theme' ); ?></span>
 					<input type="email" name="email" autocomplete="email" required>
 				</label>
-				<button type="submit" class="btn btn--accent"><?php esc_html_e( 'Sign up', 'encore' ); ?></button>
+				<button type="submit" class="btn btn--accent"><?php esc_html_e( 'Sign up', 'surface-theme' ); ?></button>
 				<p class="form-status" role="status" aria-live="polite"></p>
 			</form>
 		<?php endif; ?>

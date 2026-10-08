@@ -1,6 +1,6 @@
 <?php
 /**
- * brand.php — the band's colours from Airtable (Site Settings → Primary /
+ * brand.php — the band's colours from the hub (Site Settings → Primary /
  * Secondary Colour) as CSS custom properties, printed after everything else
  * so they win over the child theme's defaults.
  *
@@ -9,13 +9,13 @@
  * --on-accent   Black or white, whichever reads better on the accent
  * --accent-rgb  "r, g, b" for rgba() tints
  *
- * @package Encore
+ * @package Surface_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /** "#ee4367" / "ee4367" / "#e46" → [r, g, b], or null. */
-function encore_hex_rgb( string $hex ): ?array {
+function surface_hex_rgb( string $hex ): ?array {
 	$hex = ltrim( trim( $hex ), '#' );
 	if ( 3 === strlen( $hex ) ) {
 		$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
@@ -27,7 +27,7 @@ function encore_hex_rgb( string $hex ): ?array {
 }
 
 /** WCAG relative luminance. */
-function encore_luminance( array $rgb ): float {
+function surface_luminance( array $rgb ): float {
 	$c = array_map( static function ( $v ) {
 		$v /= 255;
 		return $v <= 0.03928 ? $v / 12.92 : ( ( $v + 0.055 ) / 1.055 ) ** 2.4;
@@ -35,9 +35,9 @@ function encore_luminance( array $rgb ): float {
 	return 0.2126 * $c[0] + 0.7152 * $c[1] + 0.0722 * $c[2];
 }
 
-function encore_brand_css(): string {
-	$primary   = encore_hex_rgb( (string) encore_setting( 'colour_primary' ) );
-	$secondary = encore_hex_rgb( (string) encore_setting( 'colour_secondary' ) );
+function surface_brand_css(): string {
+	$primary   = surface_hex_rgb( (string) surface_setting( 'colour_primary' ) );
+	$secondary = surface_hex_rgb( (string) surface_setting( 'colour_secondary' ) );
 
 	if ( ! $primary && ! $secondary ) {
 		return '';
@@ -45,7 +45,7 @@ function encore_brand_css(): string {
 
 	$vars = [];
 	if ( $primary ) {
-		$lum             = encore_luminance( $primary );
+		$lum             = surface_luminance( $primary );
 		$vars['--accent']     = vsprintf( '#%02x%02x%02x', $primary );
 		$vars['--accent-rgb'] = implode( ', ', $primary );
 		// Contrast vs white (1.05/(L+.05)) and black ((L+.05)/.05): pick the larger.
@@ -63,15 +63,15 @@ function encore_brand_css(): string {
 }
 
 add_action( 'wp_enqueue_scripts', static function () {
-	$css = encore_brand_css();
+	$css = surface_brand_css();
 	if ( $css ) {
-		wp_add_inline_style( is_child_theme() ? 'encore-child' : 'encore-footer', $css );
+		wp_add_inline_style( is_child_theme() ? 'surface-child' : 'surface-footer', $css );
 	}
 }, 20 );
 
 /** theme-color for mobile browser chrome. */
 add_action( 'wp_head', static function () {
-	$rgb = encore_hex_rgb( (string) encore_setting( 'colour_primary' ) );
+	$rgb = surface_hex_rgb( (string) surface_setting( 'colour_primary' ) );
 	if ( $rgb ) {
 		printf( '<meta name="theme-color" content="%s">' . "\n", esc_attr( vsprintf( '#%02x%02x%02x', $rgb ) ) );
 	}

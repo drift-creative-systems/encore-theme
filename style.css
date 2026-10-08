@@ -1,15 +1,15 @@
 /*
-Theme Name:        Encore
-Theme URI:         https://github.com/drift-creative-systems/encore-theme
-Description:       Master theme for Encore band and artist websites. Content comes from Airtable via the Encore Website plugin; each band gets a branding-only child theme.
-Version:           1.3.0
+Theme Name:        Drift: Surface Theme
+Theme URI:         https://github.com/drift-creative-systems/surface-theme
+Description:       Master theme for Drift: Surface band and artist websites. Content comes from a Drift: Surface Hub via the Drift: Surface plugin; each band gets a branding-only child theme.
+Version:           2.0.0
 Requires at least: 6.2
 Requires PHP:      8.0
 Author:            Drift Creative Systems
 Author URI:        https://driftcreativesystems.co.uk/
 License:           GPL-2.0-or-later (PHP files); proprietary (all other files). See LICENSE.
-License URI:       https://github.com/drift-creative-systems/encore-theme/blob/main/LICENSE
-Text Domain:       encore
+License URI:       https://github.com/drift-creative-systems/surface-theme/blob/main/LICENSE
+Text Domain:       surface-theme
 */
 
 /* No styles here — see assets/css/. Child themes put their tokens in their own style.css. */

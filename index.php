@@ -2,7 +2,7 @@
 /**
  * News listing, archives, search — and the fallback for anything else.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 defined( 'ABSPATH' ) || exit;
 get_header();
@@ -11,10 +11,10 @@ get_header();
 	<h1 class="page-intro__title">
 		<?php
 		if ( is_home() ) {
-			echo esc_html( get_the_title( (int) get_option( 'page_for_posts' ) ) ?: __( 'News', 'encore' ) );
+			echo esc_html( get_the_title( (int) get_option( 'page_for_posts' ) ) ?: __( 'News', 'surface-theme' ) );
 		} elseif ( is_search() ) {
 			/* translators: %s: search query. */
-			printf( esc_html__( 'Results for "%s"', 'encore' ), esc_html( get_search_query() ) );
+			printf( esc_html__( 'Results for "%s"', 'surface-theme' ), esc_html( get_search_query() ) );
 		} else {
 			echo esc_html( wp_strip_all_tags( get_the_archive_title() ) );
 		}
@@ -33,7 +33,7 @@ get_header();
 		</div>
 		<div class="pager"><?php the_posts_pagination( [ 'mid_size' => 1 ] ); ?></div>
 	<?php else : ?>
-		<p class="empty"><?php esc_html_e( 'Nothing here yet.', 'encore' ); ?></p>
+		<p class="empty"><?php esc_html_e( 'Nothing here yet.', 'surface-theme' ); ?></p>
 	<?php endif; ?>
 </div>
 <?php

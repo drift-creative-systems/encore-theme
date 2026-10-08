@@ -2,7 +2,7 @@
 /**
  * setup.php — theme supports, menus and image sizes.
  *
- * @package Encore
+ * @package Surface_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -14,14 +14,14 @@ add_action( 'after_setup_theme', static function () {
 	add_theme_support( 'responsive-embeds' );
 
 	register_nav_menus( [
-		'primary' => __( 'Main menu', 'encore' ),
-		'footer'  => __( 'Footer menu', 'encore' ),
+		'primary' => __( 'Main menu', 'surface-theme' ),
+		'footer'  => __( 'Footer menu', 'surface-theme' ),
 	] );
 
-	add_image_size( 'encore-square', 900, 900, true );     // Artwork, merch.
-	add_image_size( 'encore-portrait', 800, 1000, true );  // Members.
-	add_image_size( 'encore-wide', 1600, 900, true );      // News, video posters.
-	add_image_size( 'encore-hero', 2400, 1600, false );    // Heroes.
+	add_image_size( 'surface-square', 900, 900, true );     // Artwork, merch.
+	add_image_size( 'surface-portrait', 800, 1000, true );  // Members.
+	add_image_size( 'surface-wide', 1600, 900, true );      // News, video posters.
+	add_image_size( 'surface-hero', 2400, 1600, false );    // Heroes.
 } );
 
 /** Post-type and page-slug body classes for module-independent styling. */
@@ -33,8 +33,8 @@ add_filter( 'body_class', static function ( array $classes ): array {
 			$classes[] = 'page-' . sanitize_html_class( $post->post_name );
 		}
 	}
-	if ( ! encore_plugin_ready() ) {
-		$classes[] = 'no-encore-website';
+	if ( ! surface_plugin_ready() ) {
+		$classes[] = 'no-drift-surface';
 	}
 	return $classes;
 } );
@@ -45,8 +45,8 @@ add_filter( 'excerpt_more', static fn() => '…' );
 
 /** "has-hero" when the page opens with a full-bleed module, so the header can sit over it. */
 add_filter( 'body_class', static function ( array $classes ): array {
-	if ( ( is_page() || is_front_page() ) && function_exists( 'encore_page_rows' ) ) {
-		$first = encore_page_rows()[0]['acf_fc_layout'] ?? '';
+	if ( ( is_page() || is_front_page() ) && function_exists( 'surface_page_rows' ) ) {
+		$first = surface_page_rows()[0]['acf_fc_layout'] ?? '';
 		if ( in_array( $first, [ 'hero_module', 'page_header_module' ], true ) ) {
 			$classes[] = 'has-hero';
 		}
@@ -55,7 +55,7 @@ add_filter( 'body_class', static function ( array $classes ): array {
 } );
 
 /** Menu fallback before anyone builds one: top-level pages. */
-function encore_menu_fallback(): void {
+function surface_menu_fallback(): void {
 	$pages = get_pages( [ 'parent' => 0, 'sort_column' => 'menu_order,post_title', 'exclude' => (int) get_option( 'page_on_front' ) ] );
 	if ( ! $pages ) {
 		return;
